@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { UserModel } from '../models/UserModels';
 
 @Component({
@@ -16,7 +16,7 @@ export class UserPage implements OnInit {
 
   userInfoReceived: UserModel | undefined;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private router: Router) {
     this.userInfoReceived = this.router.getCurrentNavigation()?.extras.state?.['user'];
   }
 
