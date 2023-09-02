@@ -2,18 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { IUserLogin } from '../models/IUserLogin';
+import { IUserLogin } from '../../models/IUserLogin';
 import { NavigationExtras, Router, RouterLink} from '@angular/router';
-import { listUserSys } from '../collection-users'
+import { listUserSys } from '../../collection-users'
+
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  selector: 'app-signin',
+  templateUrl: './signin.page.html',
+  styleUrls: ['./signin.page.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, RouterLink]
 })
-export class LoginPage implements OnInit {
+export class SigninPage implements OnInit {
 
   errorLogin:boolean = false;
 
@@ -63,4 +64,5 @@ export class LoginPage implements OnInit {
   setOpen(errorLogin:boolean) {
     this.errorLogin = errorLogin;
   }
+
 }
