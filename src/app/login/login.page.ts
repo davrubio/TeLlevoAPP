@@ -2,23 +2,22 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { UserModel } from '../models/UserModels';
 import { IUserLogin } from '../models/IUserLogin';
-import { NavigationExtras, Router, RouterLinkWithHref} from '@angular/router';
+import { NavigationExtras, Router, RouterLink} from '@angular/router';
+import { listUserSys } from '../collection-users'
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule, RouterLink]
 })
 export class LoginPage implements OnInit {
 
-  listUser: UserModel[] = [
-    new UserModel('David', 'Rubio', 'dav.rubio@duocuc.cl', 'Ingenieria en Informatica', 'USER', 'dav.rubio','dav123'),
-    new UserModel('Nicolás', 'Caviedes', 'ni.caviedes@duocuc.cl', 'Ingenieria en Informatica', 'ADMIN','ni.caviedes','nico123'),
-  ];
+  errorLogin:boolean = false;
+
+  listUser = listUserSys;
 
   userLoginModal: IUserLogin = {
     username:'',
@@ -31,7 +30,7 @@ export class LoginPage implements OnInit {
     this.userLoginModalRestart();
   }
 
-  userLogin(userLoginInfo: IUserLogin): boolean{
+  userLogin(userLoginInfo: IUserLogin): any{
     for(let i = 0; i < this.listUser.length; i++){
       if((this.listUser[i].username == userLoginInfo.username) && (this.listUser[i].password == userLoginInfo.password)) {
         /* console.log('User Loged...',this.userLoginModal.username, this.userLoginModal.password); */
@@ -49,10 +48,19 @@ export class LoginPage implements OnInit {
       }
     }
     this.userLoginModalRestart();
-    return false;
   }
+
   userLoginModalRestart(): void {
     this.userLoginModal.username = '';
     this.userLoginModal.password = '';
+    this.errorLogin = true;
+  }
+
+  isOpen() {
+    return this.errorLogin;
+  }
+
+  setOpen(errorLogin:boolean) {
+    this.errorLogin = errorLogin;
   }
 }
