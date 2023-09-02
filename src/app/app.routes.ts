@@ -14,7 +14,12 @@ export const routes: Routes = [
     loadComponent: () => import('./user/user.page').then( m => m.UserPage)
   },
   {
+    path:'recoverPass',
+    loadComponent: () => import('./recover-pass/recover-pass.page').then( m => m.RecoverPassPage)
+  },
+  {
     path: '**',
     redirectTo: 'login',
   }
+
 ];
