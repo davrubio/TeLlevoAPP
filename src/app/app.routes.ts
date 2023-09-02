@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: 'login',
-    loadComponent: () => import('./login/login.page').then( m => m.LoginPage)
+    loadComponent: () => import('./login/signin/signin.page').then( m => m.SigninPage)
   },
   {
     path: 'admin',
@@ -15,11 +15,16 @@ export const routes: Routes = [
   },
   {
     path:'recoverPass',
-    loadComponent: () => import('./recover-pass/recover-pass.page').then( m => m.RecoverPassPage)
+    loadComponent: () => import('./login/recoverpass/recoverpass.page').then( m => m.RecoverpassPage)
   },
   {
     path: '**',
     redirectTo: 'login',
-  }
+  },
+  {
+    path: 'signin',
+    loadComponent: () => import('./login/signin/signin.page').then( m => m.SigninPage)
+  },
+
 
 ];
