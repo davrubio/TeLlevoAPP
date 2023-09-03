@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { IUserLogin } from '../../models/IUserLogin';
+import { IUserLogin } from '../../models/user/IUserLogin';
 import { NavigationExtras, Router, RouterLink} from '@angular/router';
 import { listUserSys } from '../../collection-users'
 
@@ -34,18 +34,20 @@ export class SigninPage implements OnInit {
   userLogin(userLoginInfo: IUserLogin): any{
     for(let i = 0; i < this.listUser.length; i++){
       if((this.listUser[i].username == userLoginInfo.username) && (this.listUser[i].password == userLoginInfo.password)) {
-        /* console.log('User Loged...',this.userLoginModal.username, this.userLoginModal.password); */
+
         let userInfoSend: NavigationExtras = {
           state: {
             user: this.listUser[i]
           }
         }
-        if(this.listUser[i].type == 'USER'){
-          let sendInfo = this.route.navigate(['/user'], userInfoSend);
-          return true;
-        }else {
-          let sendInfo = this.route.navigate(['/admin'], userInfoSend);
-        }
+        
+        if (this.listUser[i].roles.length == 1) //Redireccionar solo por rol que tiene
+          this.route.navigate(['/'+this.listUser[i].roles[0]], userInfoSend);
+        else //Mandar a vista para seleccionar tipo de vista role a ocupar en la app
+          this.route.navigate(['/pickrole'], userInfoSend);
+        
+        this.errorLogin = false;
+        return true;
       }
     }
     this.userLoginModalRestart();
