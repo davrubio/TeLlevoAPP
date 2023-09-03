@@ -35,13 +35,18 @@ export class ResetpassPage implements OnInit {
   }
 
   changePassword(){
-    this.errorConfPass = !(this.userChangePassModal.confPAss1 == this.userChangePassModal.confPAss2) && !(this.userChangePassModal.confPAss1.trim() == '');
+    this.errorConfPass = this.validPassword();
     if(!this.errorConfPass && this.userInfoReceived){
-      let i = listUserSys.indexOf(this.userInfoReceived)
+      let i = listUserSys.indexOf(this.userInfoReceived);
       this.userInfoReceived.password = this.userChangePassModal.confPAss1;
       listUserSys[i] = this.userInfoReceived;
       this.router.navigate(['/login']);
     }
+  }
+
+  validPassword() :boolean{
+    return !(this.userChangePassModal.confPAss1 == this.userChangePassModal.confPAss2) 
+           || this.userChangePassModal.confPAss1.trim() == '';
   }
 
   isOpen() {
