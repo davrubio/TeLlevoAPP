@@ -1,7 +1,9 @@
-import { Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './dashboard/components/admin/admin.component';
 import { DriverComponent } from './dashboard/components/driver/driver.component';
 import { UserComponent } from './dashboard/components/user/user.component';
+import { UserModel } from './models/user/UserModel';
+import { NgModule } from '@angular/core';
 
 export const routes: Routes = [
   {
@@ -43,3 +45,10 @@ export const routes: Routes = [
     redirectTo: 'login',
   },
 ];
+
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
