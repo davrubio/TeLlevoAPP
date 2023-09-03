@@ -16,7 +16,7 @@ import { listUserSys } from '../../collection-users'
 })
 export class SigninPage implements OnInit {
 
-  errorLogin:boolean = false;
+  errorLogin = false;
 
   listUser = listUserSys;
 
@@ -30,7 +30,7 @@ export class SigninPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.userLoginModalRestart();
+    /* this.userLoginModalRestart(); */
   }
 
   userLogin(userLoginInfo: IUserLogin): any{

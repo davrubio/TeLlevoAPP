@@ -13,4 +13,11 @@
       <ion-title size="large">recoverPass</ion-title>
     </ion-toolbar> -->
   <!-- </ion-header> -->
+  <div class="ion-padding">
+    <h2>Para recuperar la contraseña ingrese su correo insitucional</h2>
+    <ion-input class="center-content" label="Email" labelPlacement="floating" type="text" [(ngModel)]="userRecModal.institutional_email"></ion-input>
+  </div>
+  <div>
+    <ion-button (click)="userPass(userRecModal)">Recuperar</ion-button>
+  </div>
 </ion-content>

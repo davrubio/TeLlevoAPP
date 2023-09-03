@@ -25,12 +25,12 @@
       <br>
       <ion-button class="success center-content" (click)="userLogin(userLoginModal)">Ingresar</ion-button>
       <br>
-      <a [routerLink]="['/recoverPass']"  class="center-content">¿Olvidaste tu contraseña?</a>
+      <a [routerLink]="['/recoverPass']" class="center-content">Olvidé mi contraseña</a>
     </div>
 
     <ion-toast
       [isOpen]="errorLogin"
-      message="Usuario o contraseña incorrecto"
+      message="Usuario y/o contraseña incorrecto(s)"
       [duration]="5000"
       (didDismiss)="setOpen(false)"
     ></ion-toast>
