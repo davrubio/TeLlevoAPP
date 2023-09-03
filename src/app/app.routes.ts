@@ -41,9 +41,14 @@ export const routes: Routes = [
     loadComponent: () => import('./dashboard/pickrole/pickrole.page').then( m => m.PickrolePage),
   },
   {
+    path: 'resetpass',
+    loadComponent: () => import('./login/resetpass/resetpass.page').then( m => m.ResetpassPage)
+  },
+  {
     path: '**',
     redirectTo: 'login',
   },
+
 ];
 
 
