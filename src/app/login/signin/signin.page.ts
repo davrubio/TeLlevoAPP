@@ -25,7 +25,9 @@ export class SigninPage implements OnInit {
     password:'',
   };
 
-  constructor(private route: Router) { }
+  constructor(
+    private route: Router,
+  ) { }
 
   ngOnInit() {
     this.userLoginModalRestart();
@@ -34,6 +36,8 @@ export class SigninPage implements OnInit {
   userLogin(userLoginInfo: IUserLogin): any{
     for(let i = 0; i < this.listUser.length; i++){
       if((this.listUser[i].username == userLoginInfo.username) && (this.listUser[i].password == userLoginInfo.password)) {
+        
+        this.listUser[i].activeRole = this.listUser[i].roles[0];
 
         let userInfoSend: NavigationExtras = {
           state: {
