@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { listUserSys,  } from '../../collection-users';
-import { UserModel } from 'src/app/models/user/UserModel';
 import { IFormRecPass } from 'src/app/models/IFormRecPass';
+import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'app-recoverpass',
@@ -20,17 +20,27 @@ export class RecoverpassPage implements OnInit {
   userRecModal: IFormRecPass = {
     institutional_email:'',
     password:'',
+    confPAss1:'',
+    confPAss2:'',
   }
 
-  constructor() { }
+  constructor(private route:Router) { }
 
   ngOnInit() {
   }
 
   userPass(userInfo: IFormRecPass): any {
-    for(let i = 0; i < this.listUser.length; i++){
-      if(this.listUser[i].institutional_email == userInfo.institutional_email){
-        console.log(this.listUser[i].password)
+    for(let user of this.listUser){
+      if(user.institutional_email == userInfo.institutional_email){
+        console.log(user.password)
+
+        let userInfoSend: NavigationExtras = {
+          state: {
+            usuario: user
+          }
+        }
+
+        this.route.navigate(['/resetpass'],userInfoSend)
       }
     }
   }

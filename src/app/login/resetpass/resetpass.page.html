@@ -10,4 +10,20 @@
       <ion-title size="large">resetpass</ion-title>
     </ion-toolbar>
   </ion-header> -->
+  <h1>{{userInfoReceived?.name}}</h1>
+  <div class="ion-padding">
+    <h2>Ingrese su nueva contraseña</h2>
+    <ion-input type="text" label="Nueva contraseña" labelPlacement="floating" [(ngModel)]="userChangePassModal.confPAss1"></ion-input>
+    <ion-input type="text" label="Repita contraseña" labelPlacement="floating" [(ngModel)]="userChangePassModal.confPAss2"></ion-input>
+  </div>
+  <div class="ion-padding">
+    <ion-button (click)="changePassword()">Aceptar</ion-button>
+  </div>
+
+  <ion-toast
+      [isOpen]="errorConfPass"
+      message="Usuario y/o contraseña incorrecto(s)"
+      [duration]="5000"
+      (didDismiss)="setOpen(false)"
+    ></ion-toast>
 </ion-content>
