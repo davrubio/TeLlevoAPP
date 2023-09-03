@@ -16,15 +16,19 @@ export class PickrolePage implements OnInit {
 
   userInfo : UserModel | undefined;
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+  ) { }
+
+  ngOnInit() {
     this.userInfo = this.router.getCurrentNavigation()?.extras.state?.['user'];
   }
 
-  ngOnInit() {
-  }
+  redirectToPage(role:string){
+    if(this.userInfo)
+      this.userInfo.activeRole = role;
 
-  redirectToPage(url:string){
-    url = '/'+url;
+    let url = '/'+role;
     this.router.navigate([url], {state:{user:this.userInfo}});
   }
 

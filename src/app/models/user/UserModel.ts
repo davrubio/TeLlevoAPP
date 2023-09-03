@@ -1,4 +1,3 @@
-
 export class UserModel {
     constructor(
         public name: string,
@@ -8,5 +7,6 @@ export class UserModel {
         public roles: string[],
         public username: string,
         public password: string,
+        public activeRole: string | undefined,
     ){}
 }

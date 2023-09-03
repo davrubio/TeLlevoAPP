@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { UserModel } from 'src/app/models/user/UserModel';
 
 @Component({
@@ -11,12 +10,8 @@ export class AdminComponent  implements OnInit {
 
   userInfo: UserModel | undefined;
 
-  constructor(private router: Router) { }
+  constructor() { }
 
-  ngOnInit() {
-    this.userInfo = this.router.getCurrentNavigation()?.extras.state?.['user'];
-    console.log('ADMIN COMPONENT')
-    console.log(this.userInfo?.name);
-  }
+  ngOnInit() { }
 
 }
