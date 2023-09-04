@@ -1,3 +1,18 @@
-<p>
-  Hola {{userInfo?.name}} desde driver!
-</p>
+<div class="ion-padding">
+  <h1>Bienvenido {{userInfo?.name}}</h1>
+  <h3>Ingresa el viaje que realizaras</h3>
+  <ion-input type="text" label="Origen" labelPlacement="floating" [(ngModel)]="formTravel.origen"></ion-input>
+  <ion-input type="text" label="Destino" labelPlacement="floating" [(ngModel)]="formTravel.destino"></ion-input>
+  <ion-input type="number " label="Asientos disponibles" labelPlacement="floating" [(ngModel)]="formTravel.asientosDisp"></ion-input>
+  <br>
+  <ion-item>
+    <ion-select label="Tipo de pago" label-placement="floating" [(ngModel)]="formTravel.tipoPago">
+      <ion-select-option value="efectivo">Efectivo</ion-select-option>
+      <ion-select-option value="debito">Debito</ion-select-option>
+      <ion-select-option value="credito">Credito</ion-select-option>
+    </ion-select>
+  </ion-item>
+</div>
+<div class="ion-padding">
+  <ion-button (click)="regTravel()" >Iniciar Viaje</ion-button>
+</div>

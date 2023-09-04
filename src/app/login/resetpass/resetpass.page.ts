@@ -5,7 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { UserModel } from 'src/app/models/user/UserModel';
 import { Router } from '@angular/router';
 import { IFormRecPass } from 'src/app/models/IFormRecPass';
-import { listUserSys } from 'src/app/collection-users';
+import { listUserSys } from 'src/app/collection-app';
 
 @Component({
   selector: 'app-resetpass',

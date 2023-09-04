@@ -1,0 +1,34 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Información Conductor</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div *ngIf="driver" class="ion-padding">
+    <h1>Datos Conductor:</h1>
+    <p>Nombre: {{driver.name}}</p>
+    <p>Apellido: {{driver.last_name}}</p>
+    <p>Carrera: {{driver.career}}</p>
+    <br>
+    <h1>Datos Vehiculo:</h1>
+    <p>Modelo: {{driver.car?.modelo}}</p>
+    <p>Patente: {{driver.car?.patente}}</p>
+    <p>Marca: {{driver.car?.marca}}</p>
+    <p>Año vehiculo: {{driver.car?.annoVehiculo}}</p>
+    <p>asientos: {{driver.car?.asientos}}</p>
+    <br>
+    <h1>Viaje Actual:</h1>
+    <p>Origen: {{travel?.origen}}</p>
+    <p>Destino: {{travel?.destino}}</p>
+    <p>Fecha: {{travel?.fecha_hora}}</p>
+    <p>Asientos disponibles: {{travel?.asientosDisp}}</p>
+    <p>Tipo de pago: {{travel?.tipoPago}}</p>
+  </div>
+
+  <ng-container *ngIf="travel">
+    <div class="ion-padding" *ngIf="travel.asientosDisp > 0">
+      <ion-button (click)="regUserInTravel()">Tomar viaje</ion-button>
+    </div>
+  </ng-container>
+</ion-content>

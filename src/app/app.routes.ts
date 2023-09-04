@@ -11,7 +11,7 @@ export const routes: Routes = [
     loadComponent: () => import('./login/signin/signin.page').then( m => m.SigninPage),
   },
   {
-    path: '',
+    path: 'dash',
     loadComponent: () => import('./dashboard/home/home.page').then( m => m.HomePage),
     children:[
       {
@@ -45,9 +45,14 @@ export const routes: Routes = [
     loadComponent: () => import('./login/resetpass/resetpass.page').then( m => m.ResetpassPage)
   },
   {
+    path: 'travel',
+    loadComponent: () => import('./travel/travel.page').then( m => m.TravelPage)
+  },
+  {
     path: '**',
     redirectTo: 'login',
   },
+
 
 ];
 
