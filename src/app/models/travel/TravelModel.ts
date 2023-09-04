@@ -8,7 +8,7 @@ export class TravelModel{
         public fecha_hora: Date | undefined,
         public conductor: UserModel | undefined,
         public asientosDisp: number,
-        public pasajeros: UserModel[] | undefined,
+        public pasajeros: UserModel[],
         public tipoPago: string,
     ){}
 }

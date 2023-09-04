@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { IUserLogin } from '../../models/user/IUserLogin';
 import { NavigationExtras, Router, RouterLink} from '@angular/router';
-import { listUserSys } from '../../collection-users'
+import { listUserSys, listTravel } from '../../collection-app'
 
 
 @Component({
@@ -29,9 +29,7 @@ export class SigninPage implements OnInit {
     private route: Router,
   ) { }
 
-  ngOnInit() {
-    /* this.userLoginModalRestart(); */
-  }
+  ngOnInit() { }
 
   userLogin(userLoginInfo: IUserLogin): any{
     for(let i = 0; i < this.listUser.length; i++){
@@ -46,7 +44,7 @@ export class SigninPage implements OnInit {
         }
         
         if (this.listUser[i].roles.length == 1) //Redireccionar solo por rol que tiene
-          this.route.navigate(['/'+this.listUser[i].roles[0]], userInfoSend);
+          this.route.navigate(['/dash/'+this.listUser[i].roles[0]], userInfoSend);
         else //Mandar a vista para seleccionar tipo de vista role a ocupar en la app
           this.route.navigate(['/pickrole'], userInfoSend);
         
