@@ -1,34 +1,67 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Información Conductor</ion-title>
+<ion-header [translucent]="true" class="ion-no-border ion-paddig">
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalles del viaje</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <div *ngIf="driver" class="ion-padding">
-    <h1>Datos Conductor:</h1>
-    <p>Nombre: {{driver.name}}</p>
-    <p>Apellido: {{driver.last_name}}</p>
-    <p>Carrera: {{driver.career}}</p>
-    <br>
-    <h1>Datos Vehiculo:</h1>
-    <p>Modelo: {{driver.car?.modelo}}</p>
-    <p>Patente: {{driver.car?.patente}}</p>
-    <p>Marca: {{driver.car?.marca}}</p>
-    <p>Año vehiculo: {{driver.car?.annoVehiculo}}</p>
-    <p>asientos: {{driver.car?.asientos}}</p>
-    <br>
-    <h1>Viaje Actual:</h1>
-    <p>Origen: {{travel?.origen}}</p>
-    <p>Destino: {{travel?.destino}}</p>
-    <p>Fecha: {{travel?.fecha_hora}}</p>
-    <p>Asientos disponibles: {{travel?.asientosDisp}}</p>
-    <p>Tipo de pago: {{travel?.tipoPago}}</p>
+    <h1 class="ion-padding">Datos Conductor:</h1>
+    <ion-list>
+      <ion-item>
+        <ion-label>Nombre: {{driver.name}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Apellido: {{driver.last_name}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Carrera: {{driver.career}}</ion-label>
+      </ion-item>
+    </ion-list>
+    <h1 class="ion-padding">Datos Vehiculo:</h1>
+    <ion-list>
+      <ion-item>
+        <ion-label>Modelo: {{driver.car?.modelo}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Patente: {{driver.car?.patente}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Marca: {{driver.car?.marca}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Año vehiculo: {{driver.car?.annoVehiculo}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Asientos: {{driver.car?.asientos}}</ion-label>
+      </ion-item>
+    </ion-list>
+    <h1 class="ion-padding">Datos Viaje:</h1>
+    <ion-list>
+      <ion-item>
+        <ion-label>Origen: {{travel?.origen}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Destino: {{travel?.destino}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Fecha: {{travel?.fecha_hora}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Asientos disponibles: {{travel?.asientosDisp}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Tipo de pago: {{travel?.tipoPago}}</ion-label>
+      </ion-item>
+    </ion-list>
   </div>
 
   <ng-container *ngIf="travel">
     <div class="ion-padding" *ngIf="travel.asientosDisp > 0">
-      <ion-button (click)="regUserInTravel()">Tomar viaje</ion-button>
+      <ion-button (click)="regUserInTravel()" class="center-content" color="dark">Tomar viaje</ion-button>
     </div>
   </ng-container>
 </ion-content>

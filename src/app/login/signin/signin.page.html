@@ -1,20 +1,17 @@
-<ion-header [translucent]="true">
-  <ion-toolbar color="medium">
-    <ion-title>Login User</ion-title>
+<ion-header class="ion-no-border ion-padding">
+  <ion-toolbar>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding" color="dark">
+<ion-content [fullscreen]="true" class="ion-padding">
   
-    <div class="login-form ion-padding">
+    <div class="login-form ion-padding" >
         <ion-input class="center-content" label="Username" labelPlacement="floating" type="text" [(ngModel)]="userLoginModal.username"></ion-input>
         <ion-input class="center-content" label="Password" labelPlacement="floating" type="password" [(ngModel)]="userLoginModal.password"></ion-input>
     </div>
   
     <div class="buttons ion-paddin">
-      <br>
-      <ion-button class="success center-content" (click)="userLogin(userLoginModal)">Ingresar</ion-button>
-      <br>
+      <ion-button class="center-content" (click)="userLogin(userLoginModal)" color="warning">Ingresar</ion-button>
       <a [routerLink]="['/recoverPass']" class="center-content">Olvidé mi contraseña</a>
     </div>
 
