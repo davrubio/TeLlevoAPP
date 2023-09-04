@@ -1,15 +1,17 @@
 <div class="ion-padding">
-  <h1>Bienvenido {{userInfo?.name}}</h1>
-  <h3>Ingresa el viaje que realizarás</h3>
-  <ion-input type="text" label="Origen" labelPlacement="floating" [(ngModel)]="formTravel.origen"></ion-input>
-  <ion-input type="text" label="Destino" labelPlacement="floating" [(ngModel)]="formTravel.destino"></ion-input>
-  <ion-input type="number " label="Asientos disponibles" labelPlacement="floating" [(ngModel)]="formTravel.asientosDisp"></ion-input>
-  <ion-select label="Tipo de pago" label-placement="floating" [(ngModel)]="formTravel.tipoPago">
-    <ion-select-option value="efectivo">Efectivo</ion-select-option>
-    <ion-select-option value="debito">Débito</ion-select-option>
-    <ion-select-option value="credito">Crédito</ion-select-option>
-  </ion-select>
-</div>
+  <div class="form-travel">
+    <h1>Bienvenido {{userInfo?.name}}</h1>
+    <h3>Ingresa el viaje que realizarás</h3>
+    <ion-input type="text" label="Origen" labelPlacement="floating" [(ngModel)]="formTravel.origen"></ion-input>
+    <ion-input type="text" label="Destino" labelPlacement="floating" [(ngModel)]="formTravel.destino"></ion-input>
+    <ion-input type="number " label="Asientos disponibles" labelPlacement="floating" [(ngModel)]="formTravel.asientosDisp"></ion-input>
+    <ion-select label="Tipo de pago" label-placement="floating" [(ngModel)]="formTravel.tipoPago">
+      <ion-select-option value="efectivo">Efectivo</ion-select-option>
+      <ion-select-option value="debito">Débito</ion-select-option>
+      <ion-select-option value="credito">Crédito</ion-select-option>
+    </ion-select>
+  </div>
+  </div>
 <div class="ion-padding">
   <ion-button (click)="regTravel()" class="center-content" color="success">Iniciar Viaje</ion-button>
 </div>

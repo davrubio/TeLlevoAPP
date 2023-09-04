@@ -7,10 +7,24 @@ h1 {
     display: flex;
     justify-content: center;
     font-weight: 600;
+    color: black;
 }
 
 .center-content {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/* ion-list-header, ion-item {
+    background: white;
+} */
+.header, .item {
+    --background: white;
+    color: black;
+}
+
+ion-button {
+    --background: black;
+    color: white;
 }

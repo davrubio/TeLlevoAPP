@@ -1,0 +1,26 @@
+ion-toolbar {
+    --background: black;
+}
+
+ion-content {
+    --background: white;
+}
+
+.form-email {
+    color: black;
+}
+
+ion-back-button {
+    color: white;
+}
+
+ion-title {
+    padding: 0px;
+}
+
+.center-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 5%;
+}

@@ -1,16 +1,16 @@
-<ion-header [translucent]="true" class="ion-no-border ion-paddig">
-  <ion-toolbar color="secondary">
+<ion-header class="ion-no-border">
+  <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Detalles del viaje</ion-title>
+    <ion-title><ion-icon name="car"></ion-icon> Detalles del viaje</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <div *ngIf="driver" class="ion-padding">
     <h1 class="ion-padding">Datos Conductor:</h1>
-    <ion-list>
+    <ion-list class="item">
       <ion-item>
         <ion-label>Nombre: {{driver.name}}</ion-label>
       </ion-item>
@@ -61,7 +61,7 @@
 
   <ng-container *ngIf="travel">
     <div class="ion-padding" *ngIf="travel.asientosDisp > 0">
-      <ion-button (click)="regUserInTravel()" class="center-content" color="dark">Tomar viaje</ion-button>
+      <ion-button (click)="regUserInTravel()" class="center-content">Tomar viaje</ion-button>
     </div>
   </ng-container>
 </ion-content>

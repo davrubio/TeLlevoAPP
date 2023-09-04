@@ -1,7 +1,17 @@
 ion-toolbar {
     font-family: cursive;
     --background: transparent;
+    color: white;
 }
+
+ion-content {
+    --background: white;
+}
+
+ion-back-button {
+    color: white;
+}
+
 
 /* ion-img {
     filter: brightness(1.1);
