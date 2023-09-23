@@ -1,3 +1,7 @@
+ion-toolbar {
+    --background: black;
+}
+
 ion-content {
     --background: white;
 }
@@ -16,6 +20,11 @@ h1 {
     padding-bottom: 0;
     margin-bottom: 0;
     color: black;
+}
+
+ion-title {
+    padding: 0px;
+    color: white;
 }
 
 .center-content {
