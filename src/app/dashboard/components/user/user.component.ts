@@ -8,7 +8,7 @@ import { TravelModel } from 'src/app/models/travel/TravelModel';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-user',
+  selector: 'app-user-dash',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss'],
   standalone: true,
@@ -36,7 +36,7 @@ export class UserComponent  implements OnInit {
   ngOnInit() { }
 
   viewTravel(travel: TravelModel){
-    this.router.navigate(['/travel'], {state:{travelInfo:travel, user:this.userInfo}});
+    this.router.navigate(['/travel/'+this.userInfo?.activeRole], {state:{travelInfo:travel, user:this.userInfo}});
   }
 
 }

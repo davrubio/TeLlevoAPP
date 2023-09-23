@@ -2,8 +2,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './dashboard/components/admin/admin.component';
 import { DriverComponent } from './dashboard/components/driver/driver.component';
 import { UserComponent } from './dashboard/components/user/user.component';
+import { TDriverComponent } from './travel/components/driver/driver.component';
 import { UserModel } from './models/user/UserModel';
 import { NgModule } from '@angular/core';
+import { TUserComponent } from './travel/components/user/user.component';
 
 export const routes: Routes = [
   {
@@ -29,6 +31,20 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'travel',
+    loadComponent: () => import('./travel/view/travel.page').then( m => m.TravelPage),
+    children:[
+      {
+        path: 'driver',
+        component: TDriverComponent,
+      },
+      {
+        path: 'user',
+        component: TUserComponent,
+      },
+    ],
+  },
+  {
     path:'recoverPass',
     loadComponent: () => import('./login/recoverpass/recoverpass.page').then( m => m.RecoverpassPage),
   },
@@ -44,10 +60,10 @@ export const routes: Routes = [
     path: 'resetpass',
     loadComponent: () => import('./login/resetpass/resetpass.page').then( m => m.ResetpassPage)
   },
-  {
+  /* {
     path: 'travel',
     loadComponent: () => import('./travel/travel.page').then( m => m.TravelPage)
-  },
+  }, */
   {
     path: '**',
     redirectTo: 'login',
