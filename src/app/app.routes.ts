@@ -3,7 +3,6 @@ import { AdminComponent } from './dashboard/components/admin/admin.component';
 import { DriverComponent } from './dashboard/components/driver/driver.component';
 import { UserComponent } from './dashboard/components/user/user.component';
 import { TDriverComponent } from './travel/components/driver/driver.component';
-import { UserModel } from './models/user/UserModel';
 import { NgModule } from '@angular/core';
 import { TUserComponent } from './travel/components/user/user.component';
 
@@ -54,16 +53,12 @@ export const routes: Routes = [
   },
   {
     path: 'pickrole',
-    loadComponent: () => import('./dashboard/pickrole/pickrole.page').then( m => m.PickrolePage),
+    loadComponent: () => import('./login/pickrole/pickrole.page').then( m => m.PickrolePage),
   },
   {
     path: 'resetpass',
     loadComponent: () => import('./login/resetpass/resetpass.page').then( m => m.ResetpassPage)
   },
-  /* {
-    path: 'travel',
-    loadComponent: () => import('./travel/travel.page').then( m => m.TravelPage)
-  }, */
   {
     path: '**',
     redirectTo: 'login',
