@@ -6,12 +6,20 @@ ion-content {
     --background: white;
 }
 
-.form-pass {
+ion-back-button {
+    color: white;
+}
+
+.item {
+    --background: white;
     color: black;
 }
 
-ion-back-button {
-    color: white;
+h1 {
+    margin-top: 16px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    color: black;
 }
 
 ion-title {
@@ -23,5 +31,9 @@ ion-title {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-top: 5%;
+}
+
+ion-button {
+    --background: black;
+    color: white;
 }

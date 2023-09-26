@@ -1,3 +1,14 @@
-<p>
-  Hola {{userInfo?.name}} desde usuario!
-</p>
+<div class="ion-padding">
+  <div class="travels">
+    <h1>Bienvenido {{userInfo?.name}}</h1>
+    <ion-list class="travels" color="light">
+      <ion-list-header class="header">
+        <ion-label class="title">Viajes disponibles</ion-label>
+      </ion-list-header>
+      <ion-item *ngFor="let travel of travels" class="item">
+        <ion-label>{{travel.origen}} - {{travel.destino | titlecase}}</ion-label>
+        <ion-button (click)="viewTravel(travel)">Ver detalles</ion-button>
+      </ion-item>
+    </ion-list>
+  </div>
+</div>

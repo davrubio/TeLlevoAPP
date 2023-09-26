@@ -5,7 +5,7 @@ export interface ITravel {
     destino: string;
     fecha_hora: Date | undefined;
     conductor: UserModel | undefined;
-    asientosDisp: number;
+    asientosDisp: number | undefined;
     pasajeros: UserModel[] | undefined;
     tipoPago: string;
 }

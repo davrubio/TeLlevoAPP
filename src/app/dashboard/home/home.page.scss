@@ -1,0 +1,36 @@
+ion-toolbar {
+    font-family: cursive;
+    --background: black;
+    color: white;
+}
+
+ion-content {
+    --background: white;
+}
+
+ion-back-button {
+    color: white;
+}
+
+
+/* ion-img {
+    filter: brightness(1.1);
+    mix-blend-mode: multiply;
+    height: 30px;
+    padding-left: 80%;
+    display: flex;
+    animation: scroll 50s linear infinite;
+    -webkit-animation: scroll 40s linear infinite;
+} */
+
+/* @keyframes scroll {
+    0% {
+        -webkit-transform: translateX(0);
+        transform: translate(0);
+    }
+    100% {
+        -webkit-transform: translateX(calc(-200px * 10));
+        transform: translate(calc(-200px * 10));
+    }
+}
+ */
