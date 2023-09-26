@@ -1,20 +1,20 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { listUserSys, listTravel } from '../collection-app';
-import { UserModel } from '../models/user/UserModel';
-import { TravelModel } from '../models/travel/TravelModel';
 import { Router } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+import { listTravel } from 'src/app/collection-app';
+import { TravelModel } from 'src/app/models/travel/TravelModel';
+import { UserModel } from 'src/app/models/user/UserModel';
 
 @Component({
-  selector: 'app-travel',
-  templateUrl: './travel.page.html',
-  styleUrls: ['./travel.page.scss'],
+  selector: 'app-user-travel',
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule]
 })
-export class TravelPage implements OnInit {
+export class TUserComponent  implements OnInit {
 
   travel: TravelModel | undefined;
   driver: UserModel | undefined;
@@ -23,13 +23,9 @@ export class TravelPage implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
-    this.userInfo = this.router.getCurrentNavigation()?.extras.state?.['user'];
-    this.travel = this.router.getCurrentNavigation()?.extras.state?.['travelInfo'];
-    this.driver = this.travel?.conductor;
   }
 
   regUserInTravel(){
-
     if(this.travel && this.userInfo && this.driver?.car){
       if(this.travel.asientosDisp != 0){
         let index = listTravel.indexOf(this.travel);
@@ -40,7 +36,7 @@ export class TravelPage implements OnInit {
 
         this.router.navigate(['/dash/'+this.userInfo.activeRole],{state:{user:this.userInfo}})
       }
-
     }
   }
+
 }
