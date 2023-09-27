@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Router, RouterOutlet} from '@angular/router';
 import { UserModel } from 'src/app/models/user/UserModel';
-import { AdminComponent } from '../components/admin/admin.component';
-import { DriverComponent } from '../components/driver/driver.component';
-import { UserComponent } from '../components/user/user.component';
+import { AdminComponent } from '../../components/dashboard/admin/admin.component';
+import { DriverComponent } from '../../components/dashboard/driver/driver.component';
+import { UserComponent } from '../../components/dashboard/user/user.component';
 
 @Component({
   selector: 'app-home',
