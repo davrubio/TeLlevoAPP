@@ -15,7 +15,7 @@ import { UserModel } from 'src/app/models/user/UserModel';
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule]
 })
-export class TDriverComponent  implements OnInit {
+export class DriverComponent  implements OnInit {
 
   userInfo: UserModel | undefined;
 

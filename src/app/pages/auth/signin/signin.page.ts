@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { IUserLogin } from '../../models/user/IUserLogin';
+import { IUserLogin } from '../../../models/user/IUserLogin';
 import { NavigationExtras, Router, RouterLink} from '@angular/router';
-import { listUserSys, listTravel } from '../../collection-app'
+import { listUserSys, listTravel } from '../../../collection-app'
+import { AuthService } from 'src/app/services/authentication/auth.service';
 
 
 @Component({
@@ -27,6 +28,7 @@ export class SigninPage implements OnInit {
 
   constructor(
     private route: Router,
+    private authService: AuthService,
   ) { }
 
   ngOnInit() { }
@@ -67,6 +69,17 @@ export class SigninPage implements OnInit {
 
   setOpen(errorLogin:boolean) {
     this.errorLogin = errorLogin;
+  }
+
+  async loginWithGoogle(): Promise<void> {
+    try {
+      const result = await this.authService.signInWithGoogleProvider();
+      // this.route.navigate(['/dash/admin'], {state:{user:this.userLoginModal}});
+      console.log(result);
+
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 }
