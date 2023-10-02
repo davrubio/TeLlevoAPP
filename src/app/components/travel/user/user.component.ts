@@ -14,7 +14,7 @@ import { UserModel } from 'src/app/models/user/UserModel';
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule]
 })
-export class TUserComponent  implements OnInit {
+export class UserComponent  implements OnInit {
 
   travel: TravelModel | undefined;
   driver: UserModel | undefined;

@@ -5,7 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { TravelModel } from 'src/app/models/travel/TravelModel';
 import { UserModel } from 'src/app/models/user/UserModel';
 import { Router, RouterOutlet } from '@angular/router';
-import { TUserComponent } from '../components/user/user.component';
+import { UserComponent } from '../../components/travel/user/user.component';
 
 @Component({
   selector: 'app-travel',
@@ -28,7 +28,7 @@ export class TravelPage implements OnInit {
 
   subscribeToEmiter(component:any){
     component.userInfo = this.userInfo;
-    if(component instanceof TUserComponent){
+    if(component instanceof UserComponent){
       component.travel = this.travelInfo;
       component.driver = this.travelInfo?.conductor;
       console.log(this.travelInfo, this.userInfo)

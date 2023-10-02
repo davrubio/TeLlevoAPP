@@ -1,69 +1,59 @@
 import { RouterModule, Routes } from '@angular/router';
-import { AdminComponent } from './dashboard/components/admin/admin.component';
-import { DriverComponent } from './dashboard/components/driver/driver.component';
-import { UserComponent } from './dashboard/components/user/user.component';
-import { TDriverComponent } from './travel/components/driver/driver.component';
-import { UserModel } from './models/user/UserModel';
 import { NgModule } from '@angular/core';
-import { TUserComponent } from './travel/components/user/user.component';
 
 export const routes: Routes = [
   {
     path: 'login',
-    loadComponent: () => import('./login/signin/signin.page').then( m => m.SigninPage),
+    loadComponent: () => import('./pages/auth/signin/signin.page').then( m => m.SigninPage),
   },
   {
     path: 'dash',
-    loadComponent: () => import('./dashboard/home/home.page').then( m => m.HomePage),
+    loadComponent: () => import('./pages/dashboard/home.page').then( m => m.HomePage),
     children:[
       {
         path: 'admin',
-        component: AdminComponent,
+        loadComponent: () => import('./components/dashboard/admin/admin.component').then(m => m.AdminComponent),
       },
       {
         path: 'driver',
-        component: DriverComponent,
+        loadComponent: () => import('./components/dashboard/driver/driver.component').then(m => m.DriverComponent),
       },
       {
         path: 'user',
-        component: UserComponent,
+        loadComponent:  () => import('./components/dashboard/user/user.component').then(m => m.UserComponent),
       },
     ],
   },
   {
     path: 'travel',
-    loadComponent: () => import('./travel/view/travel.page').then( m => m.TravelPage),
+    loadComponent: () => import('./pages/travel/travel.page').then( m => m.TravelPage),
     children:[
       {
         path: 'driver',
-        component: TDriverComponent,
+        loadComponent: () => import('./components/travel/driver/driver.component').then( m => m.DriverComponent),
       },
       {
         path: 'user',
-        component: TUserComponent,
+        loadComponent: () => import('./components/travel/user/user.component').then( m => m.UserComponent),
       },
     ],
   },
   {
     path:'recoverPass',
-    loadComponent: () => import('./login/recoverpass/recoverpass.page').then( m => m.RecoverpassPage),
+    loadComponent: () => import('./pages/auth/recoverpass/recoverpass.page').then( m => m.RecoverpassPage),
   },
   {
     path: 'signin',
-    loadComponent: () => import('./login/signin/signin.page').then( m => m.SigninPage),
+    loadComponent: () => import('./pages/auth/signin/signin.page').then( m => m.SigninPage),
   },
   {
     path: 'pickrole',
-    loadComponent: () => import('./dashboard/pickrole/pickrole.page').then( m => m.PickrolePage),
+    loadComponent: () => import('./pages/auth/pickrole/pickrole.page').then( m => m.PickrolePage),
   },
   {
     path: 'resetpass',
-    loadComponent: () => import('./login/resetpass/resetpass.page').then( m => m.ResetpassPage)
+    loadComponent: () => import('./pages/auth/resetpass/resetpass.page').then( m => m.ResetpassPage)
   },
-  /* {
-    path: 'travel',
-    loadComponent: () => import('./travel/travel.page').then( m => m.TravelPage)
-  }, */
   {
     path: '**',
     redirectTo: 'login',
