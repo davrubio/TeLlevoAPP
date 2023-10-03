@@ -31,7 +31,11 @@ export class SigninPage implements OnInit {
     private route: Router,
     private authService: AuthService,
     private userService: UserService,
-  ) { }
+  ) { 
+    // if(JSON.parse(localStorage.getItem('user') || '{}') != undefined) HACER VALIDACION DE ROLES PARA REDIRECCIONAR CUANDO EXISTA USUARIO EN LOCAL STORAGE
+
+
+  }
 
   ngOnInit() { }
 
@@ -75,7 +79,6 @@ export class SigninPage implements OnInit {
 
   async loginWithGoogle(): Promise<void> {
     try {
-      const result = 'Hola'
       this.authService.GoogleAuthProv();  
     } catch (error) {
       console.log(error);
@@ -84,7 +87,6 @@ export class SigninPage implements OnInit {
 
   getData(){
     console.log('Entro a getData login');
-    // this.userService.getUser();
-    this.userService.createCollection();
+    this.userService.saveUser();
   }
 }
