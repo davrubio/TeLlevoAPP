@@ -1,30 +1,35 @@
 import { Injectable } from '@angular/core';
-import { Auth, UserCredential, getAuth, signInWithPopup } from '@angular/fire/auth';
-import { AuthProvider, GoogleAuthProvider } from 'firebase/auth';
+import { Auth, GoogleAuthProvider, getAuth, signInWithPopup } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   
-  authManual = getAuth();
+  authLocal = getAuth();
 
-  constructor(private auth: Auth) { }
+  constructor(
+    private fireAuth: Auth,
+  ) { }
 
-  signInWithGoogleProvider(): Promise<UserCredential> {
-    const provider = new GoogleAuthProvider();
-    
-    return this.callPopUp(provider);
+  GoogleAuthProv(){
+    return this.AuthLogin(new GoogleAuthProvider());
   }
 
-  async callPopUp(provider: AuthProvider): Promise<UserCredential> {
-    try {
-      console.log(this.auth,provider);
-      const result = await signInWithPopup(this.auth, provider);
-      
-      return result;
-    } catch (error: any) {
-      return error;
-    }
+  AuthLogin(provider: any){
+    return signInWithPopup(this.fireAuth,provider)
+      .then((result) =>{
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential?.accessToken;
+        const user = result.user;
+        console.log(user);
+      }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+
+        const email = error.customData.email;
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        console.log('Error al iniciar sesion: '+errorCode)
+      });
   }
 }
