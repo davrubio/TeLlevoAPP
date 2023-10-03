@@ -6,6 +6,7 @@ import { IUserLogin } from '../../../models/user/IUserLogin';
 import { NavigationExtras, Router, RouterLink} from '@angular/router';
 import { listUserSys, listTravel } from '../../../collection-app'
 import { AuthService } from 'src/app/services/authentication/auth.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 
 @Component({
@@ -29,6 +30,7 @@ export class SigninPage implements OnInit {
   constructor(
     private route: Router,
     private authService: AuthService,
+    private userService: UserService,
   ) { }
 
   ngOnInit() { }
@@ -73,13 +75,16 @@ export class SigninPage implements OnInit {
 
   async loginWithGoogle(): Promise<void> {
     try {
-      const result = await this.authService.signInWithGoogleProvider();
-      // this.route.navigate(['/dash/admin'], {state:{user:this.userLoginModal}});
-      console.log(result);
-
+      const result = 'Hola'
+      this.authService.GoogleAuthProv();  
     } catch (error) {
       console.log(error);
     }
   }
 
+  getData(){
+    console.log('Entro a getData login');
+    // this.userService.getUser();
+    this.userService.createCollection();
+  }
 }
