@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Auth, GoogleAuthProvider, getAuth, signInWithPopup } from '@angular/fire/auth';
 import { UserService } from '../user/user.service';
 import { UserInfo, UserLocalData, UserMaker } from 'src/app/models/user/user.info';

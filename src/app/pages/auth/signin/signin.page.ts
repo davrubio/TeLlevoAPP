@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injector, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
@@ -7,6 +7,7 @@ import { Router, RouterLink} from '@angular/router';
 import { listUserSys } from '../../../collection-app'
 import { AuthService } from 'src/app/services/authentication/auth.service';
 import { UserLocalData } from 'src/app/models/user/user.info';
+import { ManageSession } from 'src/app/utils/manage.session';
 
 
 @Component({
@@ -16,10 +17,10 @@ import { UserLocalData } from 'src/app/models/user/user.info';
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, RouterLink]
 })
-export class SigninPage implements OnInit {
+export class SigninPage extends ManageSession implements OnInit {
 
   errorLogin: boolean = false;
-  isBtnLogin: boolean = true;
+  isNotBtnLogin: boolean = true;
 
   listUser = listUserSys;
 
@@ -30,17 +31,12 @@ export class SigninPage implements OnInit {
 
   constructor(
     private route: Router,
-    private authService: AuthService,
-  ) { 
-    // if(localStorage.getItem('userdata') != null){
-    //   setTimeout(() => { this.redireccionar(); }, 2000);
-    // }
+    authService: AuthService,
+  ) {
+    super(authService);
   }
 
-  ngOnInit() {
-    if(!this.authService.isAuth())
-      this.isBtnLogin = false;
-   }
+  ngOnInit() { }
 
   isOpen() {
     return this.errorLogin;
@@ -51,13 +47,11 @@ export class SigninPage implements OnInit {
   }
 
   loginWithGoogle() {
-    this.isBtnLogin = true;
-
     this.authService.GoogleAuthProv()
-      .then(result => {
-        if(result){
-          this.redireccionar();
-          this.errorLogin = !result;
+    .then(result => {
+      if(result){
+        this.redireccionar();
+        this.errorLogin = !result;
         } else {
           this.errorLogin = !result;
         }
@@ -75,4 +69,7 @@ export class SigninPage implements OnInit {
       this.route.navigate(['/pickrole'], {state: {user: userData}});
   }
 
+  isBtnLogin(): boolean {
+    return this.authService.isAuth();
+  }
 }

@@ -3,17 +3,19 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Router, RouterLink } from '@angular/router';
-import { UserModel } from 'src/app/models/user/UserModel';
-import { UserInfo, UserLocalData } from 'src/app/models/user/user.info';
+import { UserLocalData } from 'src/app/models/user/user.info';
+import { HeaderComponent } from "../../../components/base/header/header.component";
 
 @Component({
-  selector: 'app-pickrole',
-  templateUrl: './pickrole.page.html',
-  styleUrls: ['./pickrole.page.scss'],
-  standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, RouterLink]
+    selector: 'app-pickrole',
+    templateUrl: './pickrole.page.html',
+    styleUrls: ['./pickrole.page.scss'],
+    standalone: true,
+    imports: [IonicModule, CommonModule, FormsModule, RouterLink, HeaderComponent]
 })
 export class PickrolePage implements OnInit {
+
+  readonly titlePage = 'Roles';
 
   userData: UserLocalData | undefined;
 

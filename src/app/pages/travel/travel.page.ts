@@ -31,7 +31,6 @@ export class TravelPage implements OnInit {
     if(component instanceof UserComponent){
       component.travel = this.travelInfo;
       component.driver = this.travelInfo?.conductor;
-      console.log(this.travelInfo, this.userInfo)
     }
   }
 }
