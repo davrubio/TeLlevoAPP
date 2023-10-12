@@ -1,4 +1,7 @@
 export function capitalizeString(str: string): string{
+    if(str == '')
+        return 'Alumno DuocUC';
+
     const arrWords = str.toLowerCase().trim().split(' ');
     let resultStr = '';
 

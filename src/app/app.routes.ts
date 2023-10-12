@@ -39,20 +39,12 @@ export const routes: Routes = [
     ],
   },
   {
-    path:'recoverPass',
-    loadComponent: () => import('./pages/auth/recoverpass/recoverpass.page').then( m => m.RecoverpassPage),
-  },
-  {
     path: 'signin',
     loadComponent: () => import('./pages/auth/signin/signin.page').then( m => m.SigninPage),
   },
   {
     path: 'pickrole',
     loadComponent: () => import('./pages/auth/pickrole/pickrole.page').then( m => m.PickrolePage),
-  },
-  {
-    path: 'resetpass',
-    loadComponent: () => import('./pages/auth/resetpass/resetpass.page').then( m => m.ResetpassPage)
   },
   {
     path: '**',

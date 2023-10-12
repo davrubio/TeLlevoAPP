@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Router, RouterLink } from '@angular/router';
 import { UserModel } from 'src/app/models/user/UserModel';
+import { UserInfo, UserLocalData } from 'src/app/models/user/user.info';
 
 @Component({
   selector: 'app-pickrole',
@@ -14,22 +15,22 @@ import { UserModel } from 'src/app/models/user/UserModel';
 })
 export class PickrolePage implements OnInit {
 
-  userInfo : UserModel | undefined;
+  userData: UserLocalData | undefined;
 
   constructor(
     private router: Router,
   ) { }
 
   ngOnInit() {
-    this.userInfo = this.router.getCurrentNavigation()?.extras.state?.['user'];
+    this.userData = this.router.getCurrentNavigation()?.extras.state?.['user'];
   }
 
   redirectToPage(role:string){
-    if(this.userInfo)
-      this.userInfo.activeRole = role;
+    if(this.userData)
+      this.userData.rolActivo = role;
 
     let url = '/dash/'+role;
-    this.router.navigate([url], {state:{user:this.userInfo}});
+    this.router.navigate([url], {state:{user:this.userData}});
   }
 
 }

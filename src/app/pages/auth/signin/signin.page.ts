@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { IUserLogin } from '../../../models/user/IUserLogin';
-import { NavigationExtras, Router, RouterLink} from '@angular/router';
-import { listUserSys, listTravel } from '../../../collection-app'
+import { Router, RouterLink} from '@angular/router';
+import { listUserSys } from '../../../collection-app'
 import { AuthService } from 'src/app/services/authentication/auth.service';
-import { UserService } from 'src/app/services/user/user.service';
+import { UserLocalData } from 'src/app/models/user/user.info';
 
 
 @Component({
@@ -18,7 +18,8 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class SigninPage implements OnInit {
 
-  errorLogin = false;
+  errorLogin: boolean = false;
+  isBtnLogin: boolean = true;
 
   listUser = listUserSys;
 
@@ -30,44 +31,16 @@ export class SigninPage implements OnInit {
   constructor(
     private route: Router,
     private authService: AuthService,
-    private userService: UserService,
   ) { 
-    // if(JSON.parse(localStorage.getItem('user') || '{}') != undefined) HACER VALIDACION DE ROLES PARA REDIRECCIONAR CUANDO EXISTA USUARIO EN LOCAL STORAGE
-
-
+    // if(localStorage.getItem('userdata') != null){
+    //   setTimeout(() => { this.redireccionar(); }, 2000);
+    // }
   }
 
-  ngOnInit() { }
-
-  userLogin(userLoginInfo: IUserLogin): any{
-    for(let i = 0; i < this.listUser.length; i++){
-      if((this.listUser[i].username == userLoginInfo.username) && (this.listUser[i].password == userLoginInfo.password)) {
-        
-        this.listUser[i].activeRole = this.listUser[i].roles[0];
-
-        let userInfoSend: NavigationExtras = {
-          state: {
-            user: this.listUser[i]
-          }
-        }
-        
-        if (this.listUser[i].roles.length == 1) //Redireccionar solo por rol que tiene
-          this.route.navigate(['/dash/'+this.listUser[i].roles[0]], userInfoSend);
-        else //Mandar a vista para seleccionar tipo de vista role a ocupar en la app
-          this.route.navigate(['/pickrole'], userInfoSend);
-        
-        this.errorLogin = false;
-        return true;
-      }
-    }
-    this.userLoginModalRestart();
-  }
-
-  userLoginModalRestart(): void {
-    this.userLoginModal.username = '';
-    this.userLoginModal.password = '';
-    this.errorLogin = true;
-  }
+  ngOnInit() {
+    if(!this.authService.isAuth())
+      this.isBtnLogin = false;
+   }
 
   isOpen() {
     return this.errorLogin;
@@ -77,16 +50,29 @@ export class SigninPage implements OnInit {
     this.errorLogin = errorLogin;
   }
 
-  async loginWithGoogle(): Promise<void> {
-    try {
-      this.authService.GoogleAuthProv();  
-    } catch (error) {
-      console.log(error);
-    }
+  loginWithGoogle() {
+    this.isBtnLogin = true;
+
+    this.authService.GoogleAuthProv()
+      .then(result => {
+        if(result){
+          this.redireccionar();
+          this.errorLogin = !result;
+        } else {
+          this.errorLogin = !result;
+        }
+      }).catch(error => {
+        console.log(error);
+      });
   }
 
-  getData(){
-    console.log('Entro a getData login');
-    this.userService.saveUser();
+  redireccionar(){
+    var userData: UserLocalData = JSON.parse(localStorage.getItem('userdata') || '{}');
+
+    if (userData.userInfo?.roles.length == 1) //Redireccionar solo por rol que tiene
+      this.route.navigate(['/dash/'+userData.userInfo?.roles[0]], {state: {user: userData}});
+    else //Mandar a vista para seleccionar tipo de vista role a ocupar en la app
+      this.route.navigate(['/pickrole'], {state: {user: userData}});
   }
+
 }

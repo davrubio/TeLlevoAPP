@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserModel } from 'src/app/models/user/UserModel';
+import { UserInfo, UserLocalData } from 'src/app/models/user/user.info';
 
 @Component({
   standalone: true,
@@ -9,7 +9,7 @@ import { UserModel } from 'src/app/models/user/UserModel';
 })
 export class AdminComponent  implements OnInit {
 
-  userInfo: UserModel | undefined;
+  userData: UserLocalData | undefined;
 
   constructor() { }
 

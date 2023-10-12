@@ -1,12 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { UserModel } from 'src/app/models/user/UserModel';
+import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { ITravel } from 'src/app/models/travel/ITravel';
-import { TravelModel } from 'src/app/models/travel/TravelModel';
-import { listTravel } from 'src/app/collection-app';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserLocalData } from 'src/app/models/user/user.info';
 
 @Component({
   selector: 'app-driver-dash',
@@ -17,14 +14,14 @@ import { Router } from '@angular/router';
 })
 export class DriverComponent  implements OnInit {
 
-  userInfo: UserModel | undefined;
+  userData: UserLocalData | undefined;
   
   constructor(private router: Router) { }
 
   ngOnInit() { }
 
   regTravel(){
-    this.router.navigate(['/travel/'+this.userInfo?.activeRole], {state:{user: this.userInfo}});
+    this.router.navigate(['/travel/'+this.userData?.rolActivo], {state:{user: this.userData}});
   }
   
 }

@@ -6,6 +6,7 @@ import { listTravel } from '../../../collection-app';
 import { ITravel } from 'src/app/models/travel/ITravel';
 import { TravelModel } from 'src/app/models/travel/TravelModel';
 import { Router } from '@angular/router';
+import { UserLocalData } from 'src/app/models/user/user.info';
 
 @Component({
   selector: 'app-user-dash',
@@ -19,7 +20,7 @@ export class UserComponent  implements OnInit {
   travels = listTravel;
   
 
-  userInfo: UserModel | undefined;
+  userData: UserLocalData | undefined;
 
   travelModal: ITravel = {
     origen:'',
@@ -36,7 +37,7 @@ export class UserComponent  implements OnInit {
   ngOnInit() { }
 
   viewTravel(travel: TravelModel){
-    this.router.navigate(['/travel/'+this.userInfo?.activeRole], {state:{travelInfo:travel, user:this.userInfo}});
+    this.router.navigate(['/travel/'+this.userData?.rolActivo], {state:{travelInfo:travel, user:this.userData}});
   }
 
 }

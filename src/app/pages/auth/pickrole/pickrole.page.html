@@ -4,12 +4,15 @@
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
     <ion-title>pickrole</ion-title>
+    <!-- <ion-buttons slot="end">
+      <ion-button (click)="cerrarSesion()" fill="outline"></ion-button>
+    </ion-buttons> -->
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
   <div class="buttons ion-paddin">
-    <div class="center-content" *ngFor="let rol of userInfo?.roles">
+    <div class="center-content" *ngFor="let rol of userData?.userInfo?.roles">
       <ion-button (click)="redirectToPage(rol)" fill="outline">{{rol | titlecase}}</ion-button>
       <br>
     </div>

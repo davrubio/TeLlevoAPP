@@ -7,6 +7,7 @@ import { UserModel } from 'src/app/models/user/UserModel';
 import { AdminComponent } from '../../components/dashboard/admin/admin.component';
 import { DriverComponent } from '../../components/dashboard/driver/driver.component';
 import { UserComponent } from '../../components/dashboard/user/user.component';
+import { UserInfo, UserLocalData } from 'src/app/models/user/user.info';
 
 @Component({
   selector: 'app-home',
@@ -17,20 +18,20 @@ import { UserComponent } from '../../components/dashboard/user/user.component';
 })
 export class HomePage implements OnInit {
 
-  userInfo: UserModel | undefined;
+  userData: UserLocalData | undefined;
 
   constructor(
     private router: Router,
   ) { }
   
   ngOnInit() {
-    this.userInfo = this.router.getCurrentNavigation()?.extras.state?.['user'];
+    this.userData = this.router.getCurrentNavigation()?.extras.state?.['user'];
   }
 
   subscribeToEmiter(component:any) {
     if(component instanceof AdminComponent || component instanceof DriverComponent || component instanceof UserComponent){
 
-      component.userInfo = this.userInfo;
+      component.userData = this.userData;
     }
   }
 
