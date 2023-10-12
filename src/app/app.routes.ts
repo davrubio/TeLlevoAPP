@@ -55,9 +55,14 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/auth/resetpass/resetpass.page').then( m => m.ResetpassPage)
   },
   {
+    path: 'map',
+    loadComponent: () => import('./components/travel/map/map.page').then( m => m.MapPage)
+  },
+  {
     path: '**',
     redirectTo: 'login',
   },
+
 
 
 ];
