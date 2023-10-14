@@ -15,7 +15,8 @@ export const environment = {
     messagingSenderId: firestoreKeys.messagingSenderId,
     measurementId: firestoreKeys.measurementId,
   },
-  production: false
+  production: false,
+  mapsKey: 'AIzaSyAfZuhEgIWRTYbVvSl73oBk3bYD0xcazUs'
 };
 
 /*

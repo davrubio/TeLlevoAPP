@@ -51,6 +51,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/form/driver/driver.page').then( m => m.DriverPage)
   },
   {
+    path: 'map',
+    loadComponent: () => import('./components/travel/map/map.page').then( m => m.MapPage)
+  },
+  {
     path: '**',
     redirectTo: 'login',
   },
