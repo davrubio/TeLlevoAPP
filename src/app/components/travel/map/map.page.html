@@ -2,8 +2,28 @@
   <ion-toolbar>
     <ion-title>Maps</ion-title>
   </ion-toolbar>
+  <ion-toolbar>
+    <input type="text" id="autocomplete" class="search-bar">
+    <ion-button (click)="calcuRoute()" expand="block" shape="round" size="small" color="success">
+      Iniciar ruta
+    </ion-button>
+    <!-- <ion-searchbar [(ngModel)]="search" search-icon="search-circle" placeholder="Donde vamos?" animated="true" show-clear-button="focus" (ionInput)="onSearchChange()"></ion-searchbar>
+    <ion-list *ngIf="search?.length > 0">
+      <ion-item *ngFor="let result of searchResults">
+        <ion-icon slot="start" name="location-outline"></ion-icon>
+        <ion-label>
+          {{ result?.structured_formatting.main_text }}
+          <p>
+            <ion-text >
+              {{ result?.description }}
+            </ion-text>
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>  -->   
+  </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <div #map></div>
+<ion-content>
+  <div id="map"></div>
 </ion-content>

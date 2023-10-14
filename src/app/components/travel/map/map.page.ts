@@ -1,10 +1,9 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { GoogleMap } from '@capacitor/google-maps';
-import { environment } from 'src/environments/environment';
-import { GmpasService } from 'src/app/services/gmaps/gmpas.service';
+
+declare var google;
 
 @Component({
   selector: 'app-map',
@@ -15,49 +14,65 @@ import { GmpasService } from 'src/app/services/gmaps/gmpas.service';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class MapPage implements OnInit {
-
-  @ViewChild('map', {static:true}) mapElementRef: ElementRef;
-  googleMaps: any;
-  center = {lat: -33.03362239261196, lng: -71.53317651646127}
+  origin = {lat: -33.03362239261196, lng: -71.53317651646127}
   map: any;
+  marker: any;
+  search: any;
+  directionsService = new google.maps.DirectionsService();
+  directionsRenderer = new google.maps.DirectionsRenderer();
 
-  constructor(private gmaps: GmpasService, private renderer: Renderer2) { }
+  constructor() {
+   }
+  
 
   ngOnInit() {
-  }
-
-  ngAfterViewInit(){
     this.loadMap();
+    this.onSearchChange(this.map, this.marker);
+  }
+  loadMap(){
+    let map: HTMLElement = document.getElementById('map');
+    
+    this.map = new google.maps.Map(map, {
+      center: this.origin,
+      zoom: 17
+    });
+
+    this.marker = new google.maps.Marker({
+      position: this.origin,
+      map: this.map
+    });
+
+    this.directionsRenderer.setMap(this.map);
+    /* let indicactions: HTMLElement = document.getElementById('indicactions'); */
+    this.directionsRenderer.setPanel();
   }
 
-  async loadMap(){
-    try{
-      let googleMaps: any = await this.gmaps.loadGoogleMaps();
-      this.googleMaps = googleMaps;
-      const mapEl = this.mapElementRef.nativeElement;
-      const location = new googleMaps.LatLng(this.center.lat, this.center.lng);
-      this.map = new googleMaps.Map(mapEl, {
-        center: location,
-        zoom: 17,
-      });
-      this.renderer.addClass(mapEl, 'visible');
-    }catch(error) {
-      console.log(error)
-    }
+  onSearchChange(localMap, localMarker){
+    let autocomplete: HTMLElement = document.getElementById('autocomplete');
+    const search = new google.maps.places.Autocomplete(autocomplete);
+    this.search = search;
+
+    search.addListener('place_changed', function() {
+      let place = search.getPlace().geometry.location;
+
+      localMap.setCenter(place);
+      localMap.setZoom(15);
+      localMarker.setPosition(place);
+    });
   }
 
-  /* async createMap(){
-    this.map = await GoogleMap.create({
-      id: 'my-map',
-      element: this.mapRef.nativeElement,
-      apiKey: environment.mapsKey,
-      config: {
-        center: {
-          lat: 33.6,
-          lng: -117.9,
-        },
-        zoom: 8,
-      },
-    })
-  } */
+  calcuRoute(){
+    let place = this.search.getPlace().geometry.location;
+    let request = {
+      origin: this.origin,
+      destination: place,
+      travelMode: google.maps.TravelMode.DRIVING
+    };
+
+    this.directionsService.route(request, (resp, status) => {
+      this.directionsRenderer.setDirections(resp);
+    });
+
+    this.marker.setPosition(null);
+  }
 }
