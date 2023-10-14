@@ -6,15 +6,18 @@ import { TravelModel } from 'src/app/models/travel/TravelModel';
 import { UserModel } from 'src/app/models/user/UserModel';
 import { Router, RouterOutlet } from '@angular/router';
 import { UserComponent } from '../../components/travel/user/user.component';
+import { HeaderComponent } from "../../components/base/header/header.component";
 
 @Component({
-  selector: 'app-travel',
-  templateUrl: './travel.page.html',
-  styleUrls: ['./travel.page.scss'],
-  standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, RouterOutlet]
+    selector: 'app-travel',
+    templateUrl: './travel.page.html',
+    styleUrls: ['./travel.page.scss'],
+    standalone: true,
+    imports: [IonicModule, CommonModule, FormsModule, RouterOutlet, HeaderComponent]
 })
 export class TravelPage implements OnInit {
+
+  readonly titlePage = 'Detalles del viaje';
 
   userInfo: UserModel | undefined;
   travelInfo: TravelModel | undefined;

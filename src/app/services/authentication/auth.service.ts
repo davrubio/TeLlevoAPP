@@ -3,6 +3,7 @@ import { Auth, GoogleAuthProvider, getAuth, signInWithPopup } from '@angular/fir
 import { UserService } from '../user/user.service';
 import { UserInfo, UserLocalData, UserMaker } from 'src/app/models/user/user.info';
 import { Router } from '@angular/router';
+import { ManageLocalData } from 'src/app/utils/manage.localdata';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class AuthService{
     private router: Router,
   ) { 
     // if(localStorage.getItem('userdata') != null) {
-    //   this.userData = JSON.parse(localStorage.getItem('user') || '{}');
+    //   this.userData = JSON.parse(localStorage.getItem('userdata') || '{}');
     // } else {
     //   this.userData = UserMaker.createBasicLocalData();
     //   localStorage.setItem('userdata', JSON.stringify(this.userData));
@@ -33,9 +34,8 @@ export class AuthService{
     return signInWithPopup(this.fireAuth, provider)
       .then((result) =>{
         // const credential = GoogleAuthProvider.credentialFromResult(result);
-        const user = result.user;
-        this.checkUser(user);
-        return true;
+        const userDataLogin = this.checkUser( result.user);
+        return false;
       }).catch((error) => {
         const errorCode = error.code;
         // const errorMessage = error.message;
@@ -43,44 +43,60 @@ export class AuthService{
         // const email = error.customData.email;
         // const credential = GoogleAuthProvider.credentialFromError(error);
         console.log('Error al iniciar sesion: '+errorCode)
-        return false;
+        return true;
       });
   }
 
-  async checkUser(userData: any){
-    var docSnap = await this.userService.getUser(userData.email);
+  async checkUser(userDataLogin: any){
+    var docSnap = await this.userService.getUser(userDataLogin.email);
     var userInfo: UserInfo;
+
     if(docSnap.exists()) {
-      userInfo = docSnap.data() as UserInfo;
+      userInfo = this.validUIDToken(userDataLogin.email, userDataLogin.uid, docSnap.data() as UserInfo);
     } else {
-      userInfo = UserMaker.createFromLogin(userData);
-      this.userService.saveUser(userData.email, userInfo);
+      userInfo = UserMaker.createFromLogin(userDataLogin);
+      this.userService.saveUser(userDataLogin.email, userInfo);
     }
-    this.saveDataLocalStorage(userData.email, userInfo);
-  }
-
-  saveDataLocalStorage(email: string, userInfo: UserInfo){
-    var userData: UserLocalData = {
-      email: email,
-      sesionActiva: true,
-      rolActivo: '',
-      userInfo: userInfo,
-    };
-
-    localStorage.clear();
-    localStorage.setItem('userdata', JSON.stringify(userData));
+    
+    this.redireccionar(ManageLocalData.saveLoginLocalData(userDataLogin.email, userInfo));
   }
 
   isAuth(): boolean {
-    return getAuth().currentUser != null;
+    const localData = ManageLocalData.getLocalData();
+    return getAuth().currentUser != null && Object.keys(localData).length > 0;
   }
 
   signOut() {
+    var userData: UserLocalData = ManageLocalData.getLocalData();
+    
+    userData.rolActivo = '';
+    userData.sesionActiva = false;
+
+    ManageLocalData.saveExistsLocalData(userData);
+
     this.fireAuth.signOut();
     this.router.navigate(['/login']);
   }
 
-  changedToken(){
-    // this.fireAuth.onIdTokenChanged()
+  validUIDToken(email: string, uidLogin: string, userInfo: UserInfo): UserInfo{
+      if(uidLogin != userInfo.uid){
+        //Primero Actualizamos informacion del usuario
+        userInfo.lastUid = userInfo.uid;
+        userInfo.uid = uidLogin;
+
+        //Luego enviamos a actualizar datos de la base datos
+        this.userService.saveUser(email, userInfo);
+      }
+    return userInfo;
+  }
+
+  redireccionar(userLoginData: UserLocalData){
+    if (userLoginData.userInfo?.roles.length == 1) { //Redireccionar solo por rol que tiene
+      userLoginData.rolActivo = userLoginData.userInfo?.roles[0];
+      this.router.navigate(['/dash/'+userLoginData.userInfo?.roles[0]], {state: {user: userLoginData}});
+      ManageLocalData.saveExistsLocalData(userLoginData);
+      
+    } else //Mandar a vista para seleccionar tipo de vista role a ocupar en la app
+      this.router.navigate(['/pickrole'], {state: {user: userLoginData}});
   }
 }

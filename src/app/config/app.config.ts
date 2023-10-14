@@ -9,6 +9,7 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { getDatabase, provideDatabase } from '@angular/fire/database';
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 const appConfig: ApplicationConfig = {
     providers: [
@@ -21,6 +22,7 @@ const appConfig: ApplicationConfig = {
         importProvidersFrom(provideStorage(() => getStorage())),
         importProvidersFrom(provideDatabase(() => getDatabase())),
         provideAnimations(),
+        provideHttpClient(withInterceptorsFromDi()),
     ]
 }
 

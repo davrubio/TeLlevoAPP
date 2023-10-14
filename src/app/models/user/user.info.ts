@@ -23,7 +23,7 @@ export class UserMaker {
 
     static createFromLogin(userData: User): UserInfo {
         return {
-            nombre: capitalizeString(userData.displayName || ''),
+            nombre: userData.displayName != null ? capitalizeString(userData.displayName) : 'User DuocUC',
             uid: userData.uid,
             lastUid: userData.uid,
             emailVerificado: userData.emailVerified,

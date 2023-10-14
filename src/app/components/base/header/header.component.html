@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title><ion-icon *ngIf="titlePage == 'TeLlevoApp'" name="car"></ion-icon>{{titlePage}}</ion-title>
+    <ion-title><ion-icon *ngIf="titlePage != 'Roles'" name="car"></ion-icon>{{titlePage}}</ion-title>
 
     <ion-buttons slot="end">
       <!-- <ion-button (click)="cerrarSesion()" fill="clear"><ion-icon name="exit"></ion-icon></ion-button> -->
@@ -19,16 +19,26 @@
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding">
-      <ion-button size="large" expand="block" fill="clear">
+      <ion-button (click)="redirecToProfile()" size="medium" expand="block" fill="clear">
         <ion-icon slot="start" name="person"></ion-icon>
         Perfil
       </ion-button>
-      <ion-button (click)="cerrarSesion()" size="large" expand="block" fill="clear">
+      <div *ngIf="!userData.userInfo?.roles?.includes('driver')">
+        <ion-button (click)="redirecToDriverForm()" size="medium" expand="block" fill="clear">
+          <ion-icon slot="start" name="car"></ion-icon>
+          Quiero ser conductor
+        </ion-button>
+      </div>
+      <ion-toggle labelPlacement="stacked" alignment="center" aria-label="Medium toggle" color="medium" [checked]="false">Modo Oscuro</ion-toggle>
+  </ion-content>
+  <ion-footer>
+    <ion-toolbar>
+      <ion-button (click)="cerrarSesion()" size="medium" expand="block" fill="clear">
         <ion-icon slot="start" name="exit"></ion-icon>
         Cerrar Sesión
       </ion-button>
-      <ion-toggle labelPlacement="stacked" alignment="center" aria-label="Medium toggle" color="medium" [checked]="false">Modo Oscuro</ion-toggle>
-  </ion-content>
+    </ion-toolbar>
+  </ion-footer>
 </ion-menu>
 
 <div class="ion-page" id="main-content"></div>

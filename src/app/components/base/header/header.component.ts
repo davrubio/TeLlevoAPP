@@ -1,7 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { UserLocalData } from 'src/app/models/user/user.info';
 import { AuthService } from 'src/app/services/authentication/auth.service';
+import { ManageLocalData } from 'src/app/utils/manage.localdata';
 import { ManageSession } from 'src/app/utils/manage.session';
 
 @Component({
@@ -16,10 +19,24 @@ export class HeaderComponent extends ManageSession implements OnInit {
   @Input({required:true})
   titlePage!: string;
 
-  constructor( authService: AuthService ) {
+  userData: UserLocalData;
+
+  constructor( 
+    authService: AuthService,
+    private router: Router, 
+  ) {
     super(authService);
+    this.userData = ManageLocalData.getLocalData();
   }
 
   ngOnInit() { }
+
+  redirecToProfile(){
+    this.router.navigate(['/profile'], {state: {user: this.userData}});
+  }
+
+  redirecToDriverForm(){
+    this.router.navigate(['/form/driver'], {state: {user: this.userData}});
+  }
 
 }
