@@ -1,14 +1,31 @@
-export interface SearchResults {
-    results: Array<object>;
-    total: number;
+export interface SearchResult {
+    collection: {};
+    data: Array<any>;
 }
 
-export interface Manufacturer{
-    num_models: number;
-    img_url: string;
-    max_car_id: number;
+export interface CarQueryManufacturer{
     id: number;
     name: string;
-    avg_horsepower: number;
-    avg_price: number;
+    
+}
+
+export interface CarQueryModel {
+    id: number;
+    make_id: number;
+    name: string;
+    make: {
+        id: number,
+        name: string,
+    }
+}
+
+export interface CarModelInfo {
+    name: string,
+    listYears: number[],
+}
+
+export interface CarInfo {
+    idManufacterer: number;
+    manufacterer: string;
+    listModels: CarModelInfo[] | null;
 }

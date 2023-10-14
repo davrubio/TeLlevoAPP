@@ -4,9 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { HeaderComponent } from "../../../components/base/header/header.component";
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Manufacturer, SearchResults } from 'src/app/models/nopersistent/search.result';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { CarQueryManufacturer } from 'src/app/models/nopersistent/search.result';
 import { carApiKeys } from 'src/app/app.secret.keys';
+import { APICarService } from 'src/app/services/API/apicar.service';
 
 @Component({
     selector: 'app-driver',
@@ -23,8 +24,14 @@ export class DriverPage implements OnInit {
   readonly httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${carApiKeys.apiSecretKey}`
+      'X-RapidAPI-Host': 'car-api2.p.rapidapi.com',
+      'X-RapidAPI-Key': carApiKeys.apiSecretKey,
     }),
+    params: {
+      limit: '300',
+      direction: 'asc',
+      sort: 'id'
+    }
   };
   
   listManufacters: string[] = [];
@@ -32,19 +39,25 @@ export class DriverPage implements OnInit {
   constructor(
     private router: Router,
     private http: HttpClient,
+    private apiService: APICarService
   ) { 
-    this.getData();
+    this.apiService.getCarsInfo();
   }
 
   ngOnInit() {
   }
 
   getData(){
-    this.http.get<any>(this.urlServerApi+'/api/makes',this.httpOptions).subscribe((result:Array<Manufacturer>) => {
-      result.forEach(data => {
+    const params = new HttpParams();
+
+    this.http.get<any>(this.urlServerApi+'/api/makes',this.httpOptions,).subscribe(result => {
+      result.data.forEach((data: CarQueryManufacturer) => {
         this.listManufacters.push(data.name);
       })
-      console.log(this.listManufacters);
+      // result.forEach(data => {
+      //   this.listManufacters.push(data.name);
+      // })
+      // console.log(this.listManufacters);
     })
   }
 }
