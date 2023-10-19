@@ -10,5 +10,6 @@ export class TravelModel{
         public asientosDisp: number,
         public pasajeros: UserModel[],
         public tipoPago: string,
+        public mtoViaje: number,
     ){}
 }

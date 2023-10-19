@@ -16,8 +16,8 @@ export const listUserSys: UserModel[] = [
 ];
 
 export const listTravel: TravelModel[]= [
-    new TravelModel('Viña del mar','Quilpue',new Date(),listUserSys[1],3,[],'Efectivo'),
-    new TravelModel('','',undefined,undefined,0,[],''),
+    new TravelModel('Viña del mar','Quilpue',new Date(),listUserSys[1],3,[],'Efectivo',2590),
+    new TravelModel('','',undefined,undefined,0,[],'',0),
     // new TravelModel('','',undefined,undefined,0,undefined,''),
     // new TravelModel('','',undefined,undefined,0,undefined,''),
     // new TravelModel('','',undefined,undefined,0,undefined,''),
