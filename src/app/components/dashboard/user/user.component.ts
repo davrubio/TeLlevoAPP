@@ -29,6 +29,7 @@ export class UserComponent  implements OnInit {
     asientosDisp: 0,
     pasajeros: undefined,
     tipoPago: '',
+    mtoViaje: 0,
   }
 
   constructor(private router: Router) { }

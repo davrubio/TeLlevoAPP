@@ -8,4 +8,5 @@ export interface ITravel {
     asientosDisp: number | undefined;
     pasajeros: UserModel[] | undefined;
     tipoPago: string;
+    mtoViaje: number;
 }

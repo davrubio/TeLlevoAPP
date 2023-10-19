@@ -26,7 +26,8 @@ export class DriverComponent  implements OnInit {
     conductor: undefined,
     asientosDisp: undefined,
     pasajeros: undefined,
-    tipoPago: ''
+    tipoPago: '',
+    mtoViaje: 0,
   }
 
   constructor(private router: Router) { }
@@ -47,7 +48,8 @@ export class DriverComponent  implements OnInit {
         this.formTravel.conductor,
         this.formTravel.asientosDisp,
         this.formTravel.pasajeros,
-        this.formTravel.tipoPago
+        this.formTravel.tipoPago,
+        this.formTravel.mtoViaje,
       );
       
       console.log(travel)
