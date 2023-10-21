@@ -45,7 +45,7 @@ export class ResetpassPage implements OnInit {
   }
 
   validPassword() :boolean{
-    return !(this.userChangePassModal.confPAss1 == this.userChangePassModal.confPAss2) 
+    return this.userChangePassModal.confPAss1 != this.userChangePassModal.confPAss2 
            || this.userChangePassModal.confPAss1.trim() == '';
   }
 

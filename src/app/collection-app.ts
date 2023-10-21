@@ -9,8 +9,8 @@ let vehicleAMG: CarModel = new CarModel('BBCL69','AMG','Mercedes Benz',2021,true
 let vehicleBMW: CarModel = new CarModel('BBCL69','M5','BMW',2023,true,'Papa Noel',4,'rojo');
 
 export const listUserSys: UserModel[] = [
-    new UserModel('David', 'Rubio', 'dav.rubio@duocuc.cl', 'Ingenieria en Informatica', [listRoleSys[1]], 'dav.rubio','dav123', undefined,vehicleAMG),
-    new UserModel('Nicolás', 'Caviedes', 'ni.caviedes@duocuc.cl', 'Actor porno', [listRoleSys[0],listRoleSys[1],listRoleSys[2]],'ni.caviedes','nico123', undefined,vehicleBMW),
+    new UserModel('David', 'Rubio', 'dav.rubio@duocuc.cl', 'Ingenieria en Informatica', [listRoleSys[0]], 'dav.rubio','dav123', undefined,vehicleAMG),
+    new UserModel('Nicolás', 'Caviedes', 'ni.caviedes@duocuc.cl', 'Medicina', [listRoleSys[0],listRoleSys[1],listRoleSys[2]],'ni.caviedes','nico123', undefined,vehicleBMW),
     new UserModel('Sergio', 'Plaza', 's.plazae@duocuc.cl', 'Ingenieria en Informatica', [listRoleSys[0]],'s.plazae','plaza123', undefined,undefined),
     new UserModel('Jorge', 'Escobar', 'jo.escobar@duocuc.cl', 'Ingenieria en Informatica', [listRoleSys[0]],'jo.escobar','jo123', undefined,undefined),
 ];
