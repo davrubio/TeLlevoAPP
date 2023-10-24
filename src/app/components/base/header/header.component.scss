@@ -1,0 +1,13 @@
+ion-toggle{
+    --handle-background: #fff url("/assets/ios-sunny.svg") no-repeat center / contain;
+    --handle-background-checked: #fff url("/assets/ios-moon.svg") no-repeat center / contain !important;
+    
+    #custom-ion-toggle {
+        --handle-background: #fff url("/assets/ios-sunny.svg") no-repeat center / contain !important;
+        --handle-background-checked:#fff url("/assets/ios-moon.svg") no-repeat center / contain !important;
+    }
+}
+
+// .toggle-inner{
+//     --handle-background-checked: url("/assets/ios-moon.svg") no-repeat center / contain !important;
+// }

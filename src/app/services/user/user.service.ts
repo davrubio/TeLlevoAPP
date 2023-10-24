@@ -1,35 +1,39 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+import { DocumentData, DocumentSnapshot, Firestore, collection, collectionData, doc, getDoc, setDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-
-export interface usuario{
-  nombre: string;
-  id: number;
-} 
+import { UserInfo, UserLocalData } from 'src/app/models/user/user.info';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  
+
+  readonly NAME_COLLECTION = 'usuarios';
+  readonly USER_COLLECTION = collection(this.fireDatabase,this.NAME_COLLECTION);
+
+  userData: UserLocalData;
 
   constructor(
     private fireDatabase: Firestore,
-  ) { }
+  ) { 
+    this.userData = JSON.parse(localStorage.getItem('userdata') || '{}');
+  }
 
-  getUser(){
-    const nameCollection = 'usuarios';
-    const collectionDB = collection(this.fireDatabase,nameCollection);
-    let items: Observable<usuario[]>;
+  getAllUsers(){
+    let items: Observable<any[]>;
     
-    items = collectionData(collectionDB) as Observable<usuario[]>;
+    items = collectionData(this.USER_COLLECTION);
     console.log(items.forEach(item => console.log(item)))
 
   }
 
-  createCollection(){
-    const nameCollection = 'pasajeros';
-    const collectionDB = collection(this.fireDatabase,nameCollection);
-    
+  saveUser(email: string, userData: UserInfo){
+    setDoc(doc(this.fireDatabase, this.NAME_COLLECTION, email), userData);
   }
+
+  getUser(emailUser: string): Promise<DocumentSnapshot<DocumentData>> {
+    const documentRef = doc(this.fireDatabase, this.NAME_COLLECTION, emailUser);
+    return getDoc(documentRef);
+  }
+
 }

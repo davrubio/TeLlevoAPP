@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ResetpassPage } from './resetpass.page';
+import { DriverPage } from './driver.page';
 
-describe('ResetpassPage', () => {
-  let component: ResetpassPage;
-  let fixture: ComponentFixture<ResetpassPage>;
+describe('DriverPage', () => {
+  let component: DriverPage;
+  let fixture: ComponentFixture<DriverPage>;
 
   beforeEach(async(() => {
-    fixture = TestBed.createComponent(ResetpassPage);
+    fixture = TestBed.createComponent(DriverPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { IUserLogin } from '../../../models/user/IUserLogin';
-import { NavigationExtras, Router, RouterLink} from '@angular/router';
-import { listUserSys, listTravel } from '../../../collection-app'
+import { Router, RouterLink} from '@angular/router';
+import { listUserSys } from '../../../collection-app'
 import { AuthService } from 'src/app/services/authentication/auth.service';
-import { UserService } from 'src/app/services/user/user.service';
+import { UserLocalData } from 'src/app/models/user/user.info';
+import { ManageSession } from 'src/app/utils/manage.session';
+import { ManageLocalData } from 'src/app/utils/manage.localdata';
 
 
 @Component({
@@ -16,54 +17,20 @@ import { UserService } from 'src/app/services/user/user.service';
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, RouterLink]
 })
-export class SigninPage implements OnInit {
+export class SigninPage extends ManageSession implements OnInit {
 
-  errorLogin = false;
+  errorLogin: boolean = false;
 
   listUser = listUserSys;
 
-  userLoginModal: IUserLogin = {
-    username:'',
-    password:'',
-  };
-
   constructor(
-    private route: Router,
-    private authService: AuthService,
-    private userService: UserService,
-  ) { }
+    private router: Router,
+    authService: AuthService,
+  ) {
+    super(authService);
+  }
 
   ngOnInit() { }
-
-  userLogin(userLoginInfo: IUserLogin): any{
-    for(let i = 0; i < this.listUser.length; i++){
-      if((this.listUser[i].username == userLoginInfo.username) && (this.listUser[i].password == userLoginInfo.password)) {
-        
-        this.listUser[i].activeRole = this.listUser[i].roles[0];
-
-        let userInfoSend: NavigationExtras = {
-          state: {
-            user: this.listUser[i]
-          }
-        }
-        
-        if (this.listUser[i].roles.length == 1) //Redireccionar solo por rol que tiene
-          this.route.navigate(['/dash/'+this.listUser[i].roles[0]], userInfoSend);
-        else //Mandar a vista para seleccionar tipo de vista role a ocupar en la app
-          this.route.navigate(['/pickrole'], userInfoSend);
-        
-        this.errorLogin = false;
-        return true;
-      }
-    }
-    this.userLoginModalRestart();
-  }
-
-  userLoginModalRestart(): void {
-    this.userLoginModal.username = '';
-    this.userLoginModal.password = '';
-    this.errorLogin = true;
-  }
 
   isOpen() {
     return this.errorLogin;
@@ -73,18 +40,28 @@ export class SigninPage implements OnInit {
     this.errorLogin = errorLogin;
   }
 
-  async loginWithGoogle(): Promise<void> {
-    try {
-      const result = 'Hola'
-      this.authService.GoogleAuthProv();  
-    } catch (error) {
+  loginWithGoogle() {
+    this.authService.GoogleAuthProv()
+    .then(result => {
+      if(result){
+        this.errorLogin = result;
+      } else {
+        this.errorLogin = result;
+      }
+    }).catch(error => {
       console.log(error);
-    }
+    });
   }
 
-  getData(){
-    console.log('Entro a getData login');
-    // this.userService.getUser();
-    this.userService.createCollection();
+  isBtnLogin(): boolean {
+    return this.authService.isAuth();
+  }
+
+  redireccionar(){
+    var userData: UserLocalData = ManageLocalData.getLocalData();
+    if (userData.userInfo?.roles.length == 1) { //Redireccionar solo por rol que tiene
+      this.router.navigate(['/dash/'+userData.rolActivo], {state: {user: userData}});
+    } else //Mandar a vista para seleccionar tipo de vista role a ocupar en la app
+      this.router.navigate(['/pickrole'], {state: {user: userData}});
   }
 }

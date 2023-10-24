@@ -1,0 +1,73 @@
+<app-header titlePage="{{titlePage}}"> </app-header>
+
+<ion-content class="ion-padding" [fullscreen]="true">
+  <h1 class="ion-padding">Datos Personales:</h1>
+  <ion-list class="item">
+    <ion-item>
+      <ion-label>Nombre: {{userData.userInfo?.nombre}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Carrera: {{userData.userInfo?.carreraUniv}}</ion-label>
+      <ion-icon name="school"></ion-icon>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="userData.userInfo?.roles?.includes('driver')">
+    <h1 class="ion-padding">Datos del vehiculo registrado:</h1>
+    <ion-list class="item">
+      <ng-template *ngIf="userData.userInfo?.vehiculo != null; else elseValidCar">
+        <ion-item>
+          <ion-label>Patente: {{userData.userInfo?.vehiculo?.patente}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Modelo: {{userData.userInfo?.vehiculo?.modelo}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Marca: {{userData.userInfo?.vehiculo?.marca}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Año Vehiculo: {{userData.userInfo?.vehiculo?.annoVehiculo}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Permiso Circulación: {{userData.userInfo?.vehiculo?.permisoCirculacion}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Asientos: {{userData.userInfo?.vehiculo?.asientos}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Color: {{userData.userInfo?.vehiculo?.color}}</ion-label>
+        </ion-item>
+      </ng-template>
+
+      <ng-template #elseValidCar>
+        <ion-item>
+          <ion-label>No hay un vehiculo registrado</ion-label>
+        </ion-item>
+      </ng-template>
+    </ion-list>
+  </div>
+
+  <h1 class="ion-padding">Datos de la cuenta:</h1>
+  <ion-list class="item">
+    <ion-item>
+      <ion-label>Email: {{userData.email}}</ion-label>
+      <ion-icon slot="end" name="mail"></ion-icon>
+    </ion-item>
+    <ion-item *ngIf="userData.userInfo != undefined && userData.userInfo?.emailVerificado" class="ion-no-margin">
+        <ion-label>Estado Email: Verificado</ion-label>
+        <ion-icon slot="end" name="checkmark-circle"></ion-icon>
+    </ion-item>
+    <ion-item *ngIf="userData.userInfo != undefined && !userData.userInfo?.emailVerificado">
+      <ion-label>Email Verificado: No Verificado</ion-label>
+      <ion-icon slot="end" name="close-circle"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label>Roles: {{getRoles()}}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" fill="clear">
+    <ion-icon slot="start" name="create"></ion-icon>
+    Editar Información
+  </ion-button>
+</ion-content>

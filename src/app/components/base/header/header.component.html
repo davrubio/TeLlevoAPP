@@ -1,0 +1,48 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title><ion-icon *ngIf="titlePage != 'Roles'" name="car"></ion-icon>{{titlePage}}</ion-title>
+
+    <ion-buttons slot="end">
+      <!-- <ion-button (click)="cerrarSesion()" fill="clear"><ion-icon name="exit"></ion-icon></ion-button> -->
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-menu side="end" contentId="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Menú</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+      <ion-button (click)="redirecToProfile()" size="medium" expand="block" fill="clear">
+        <ion-icon slot="start" name="person"></ion-icon>
+        Perfil
+      </ion-button>
+      <div *ngIf="!userData.userInfo?.roles?.includes('driver')">
+        <ion-button (click)="redirecToDriverForm()" size="medium" expand="block" fill="clear">
+          <ion-icon slot="start" name="car"></ion-icon>
+          Quiero ser conductor
+        </ion-button>
+      </div>
+      <ion-button (click)="redirecToTmpMap()" size="medium" expand="block" fill="clear">
+        <ion-icon slot="start" name="compass"></ion-icon>
+        Mapa Temporal
+      </ion-button>
+      <ion-toggle labelPlacement="stacked" alignment="center" aria-label="Medium toggle" color="medium" [checked]="false">Modo Oscuro</ion-toggle>
+  </ion-content>
+  <ion-footer>
+    <ion-toolbar>
+      <ion-button (click)="cerrarSesion()" size="medium" expand="block" fill="clear">
+        <ion-icon slot="start" name="exit"></ion-icon>
+        Cerrar Sesión
+      </ion-button>
+    </ion-toolbar>
+  </ion-footer>
+</ion-menu>
+
+<div class="ion-page" id="main-content"></div>

@@ -39,20 +39,16 @@ export const routes: Routes = [
     ],
   },
   {
-    path:'recoverPass',
-    loadComponent: () => import('./pages/auth/recoverpass/recoverpass.page').then( m => m.RecoverpassPage),
-  },
-  {
-    path: 'signin',
-    loadComponent: () => import('./pages/auth/signin/signin.page').then( m => m.SigninPage),
-  },
-  {
     path: 'pickrole',
     loadComponent: () => import('./pages/auth/pickrole/pickrole.page').then( m => m.PickrolePage),
   },
   {
-    path: 'resetpass',
-    loadComponent: () => import('./pages/auth/resetpass/resetpass.page').then( m => m.ResetpassPage)
+    path: 'profile',
+    loadComponent: () => import('./pages/profile/user/profile.page').then( m => m.ProfilePage),
+  },
+  {
+    path: 'form/driver',
+    loadComponent: () => import('./pages/form/driver/driver.page').then( m => m.DriverPage)
   },
   {
     path: 'map',
@@ -62,8 +58,6 @@ export const routes: Routes = [
     path: '**',
     redirectTo: 'login',
   },
-
-
 
 ];
 

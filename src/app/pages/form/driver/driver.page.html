@@ -1,0 +1,14 @@
+<app-header titlePage="{{titlePage}}"></app-header>
+
+<ion-content [fullscreen]="true">
+  <h1>Pagina formulario conductor</h1>
+
+  <ion-button (click)="getData()" size="medium" fill="clear">
+    <ion-icon name="person"></ion-icon>
+    Traer info autos 1
+  </ion-button>
+
+  <ion-list class="item">
+    <ion-item *ngFor="let marca of listManufacters">{{marca}}</ion-item>
+  </ion-list>
+</ion-content>

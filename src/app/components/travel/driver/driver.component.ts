@@ -49,11 +49,7 @@ export class DriverComponent  implements OnInit {
         this.formTravel.pasajeros,
         this.formTravel.tipoPago
       );
-      
-      console.log(travel)
-
       listTravel[1] = travel;
-
       this.router.navigate(['/login']);
     }
   }
