@@ -41,7 +41,8 @@ export class HeaderComponent extends ManageSession implements OnInit {
     this.router.navigate(['/form/driver'], {state: {user: this.userData}});
   }
 
-  testData(){
-    // this.carService.getModelsData('acura').subscribe(result => console.log(result));
+  redirecToTmpMap(){
+    this.router.navigate(['/map'], {state: {user: this.userData}});
   }
+  
 }
