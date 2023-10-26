@@ -19,12 +19,8 @@ export class UserService {
     this.userData = JSON.parse(localStorage.getItem('userdata') || '{}');
   }
 
-  getAllUsers(){
-    let items: Observable<any[]>;
-
-    items = collectionData(this.USER_COLLECTION);
-    items.forEach(item => console.log(item));
-
+  getAllUsers(){    
+    return collectionData(this.USER_COLLECTION);
   }
 
   saveUser(email: string, userData: UserInfo){

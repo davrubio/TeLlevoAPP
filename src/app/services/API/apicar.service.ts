@@ -22,6 +22,7 @@ export class APICarService {
   getManufacturersData(): Observable<ResultCarAPI> {
     const httpOptions = {
       headers: this.headerRequest,
+
       params: {
         limit: '100',
         direction: 'asc',

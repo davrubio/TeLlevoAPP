@@ -2,8 +2,12 @@ import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { Travel, TravelInfo } from 'src/app/models/travel/travel.info';
+import { TravelService } from '../../../services/travel/travel.service';
+import { UserLocalData } from 'src/app/models/user/user.info';
+import { ManageLocalData } from 'src/app/utils/manage.localdata';
 
-declare var google;
+declare let google: any;
 
 @Component({
   selector: 'app-map',
@@ -14,6 +18,10 @@ declare var google;
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class MapPage implements OnInit {
+
+  userData: UserLocalData | undefined;
+  travel: TravelInfo | undefined;
+
   origin = {lat: -33.03362239261196, lng: -71.53317651646127}
   map: any;
   marker: any;
@@ -21,16 +29,16 @@ export class MapPage implements OnInit {
   directionsService = new google.maps.DirectionsService();
   directionsRenderer = new google.maps.DirectionsRenderer();
 
-  constructor() {
+  constructor(private TravelService: TravelService) {
+    this.userData = ManageLocalData.getLocalData();
    }
-  
 
   ngOnInit() {
     this.loadMap();
     this.onSearchChange(this.map, this.marker);
   }
   loadMap(){
-    let map: HTMLElement = document.getElementById('map');
+    let map: HTMLElement = document.getElementById('map')!;
     
     this.map = new google.maps.Map(map, {
       center: this.origin,
@@ -47,18 +55,20 @@ export class MapPage implements OnInit {
     this.directionsRenderer.setPanel();
   }
 
-  onSearchChange(localMap, localMarker){
-    let autocomplete: HTMLElement = document.getElementById('autocomplete');
+  onSearchChange(localMap: any, localMarker: any){
+    let autocomplete: HTMLElement = document.getElementById('autocomplete')!;
     const search = new google.maps.places.Autocomplete(autocomplete);
     this.search = search;
 
-    search.addListener('place_changed', function() {
+    search.addListener('place_changed', () => {
       let place = search.getPlace().geometry.location;
 
       localMap.setCenter(place);
       localMap.setZoom(15);
       localMarker.setPosition(place);
+      
     });
+
   }
 
   calcuRoute(){
@@ -69,7 +79,14 @@ export class MapPage implements OnInit {
       travelMode: google.maps.TravelMode.DRIVING
     };
 
-    this.directionsService.route(request, (resp, status) => {
+    console.log(this.search.getPlace().formatted_address);  // direccion
+    console.log(this.search.getPlace().geometry.location.lat()); // latitud
+    console.log(this.search.getPlace().geometry.location.lng()); // longitud
+
+    this.travel = Travel.createTravelInfo(this.userData?.userInfo!, this.userData?.userInfo?.vehiculo!, this.search.getPlace().formatted_address);
+    this.TravelService.saveTravel(this.travel)
+
+    this.directionsService.route(request, (resp: any) => {
       this.directionsRenderer.setDirections(resp);
     });
 
