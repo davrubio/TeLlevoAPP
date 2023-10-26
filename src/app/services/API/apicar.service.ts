@@ -21,7 +21,7 @@ export class APICarService {
 
   getCarsInfo(): CarInfo[] {
     const httpOptions = {
-      header: this.headerRequest,
+      Headers: this.headerRequest,
       params: {
         limit: '300',
         direction: 'asc',

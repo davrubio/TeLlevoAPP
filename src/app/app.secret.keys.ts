@@ -10,7 +10,7 @@ const firestoreKeys = {
 };
 
 const carApiKeys = {
-    apiSecretKey: '8481018b7cmsh7ca8fb340edc724p1dc07cjsn2980a5931cfb',
+    apiSecretKey: 'd557d8f9e9msh669df0bab098123p1171b7jsn71fd9b14e22a',
     urlServerApi: 'https://car-api2.p.rapidapi.com',
     fabricantesApi: '/api/years',
     modelsApi: '/api/models',
