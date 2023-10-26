@@ -21,9 +21,9 @@ export class UserService {
 
   getAllUsers(){
     let items: Observable<any[]>;
-    
+
     items = collectionData(this.USER_COLLECTION);
-    console.log(items.forEach(item => console.log(item)))
+    items.forEach(item => console.log(item));
 
   }
 
@@ -35,5 +35,4 @@ export class UserService {
     const documentRef = doc(this.fireDatabase, this.NAME_COLLECTION, emailUser);
     return getDoc(documentRef);
   }
-
 }
