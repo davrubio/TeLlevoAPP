@@ -1,5 +1,5 @@
 import { User } from "firebase/auth";
-import { Car } from "../driver/car.driver";
+import { Car } from "../driver/cardriver.info";
 import { capitalizeString } from "src/app/utils/formatter.string";
 
 export interface UserInfo{

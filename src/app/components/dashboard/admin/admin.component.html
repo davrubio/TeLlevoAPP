@@ -1,3 +1,14 @@
-<p style="color: black;">
-  Hola {{userData?.userInfo?.nombre}} desde admin!
-</p>
+<h1>Bienvenido Administrador: {{userData.userInfo?.nombre}}</h1>
+<section>
+  <h2>Solicitudes Pendientes</h2>
+  <ion-list *ngIf="listRequests.length>0" lines="full">
+    <ion-item>
+      <ion-label *ngFor="let request of listRequests">Alumno: {{request.emailStudent}} 
+        <ion-button id="open-action-sheet">Acciones</ion-button>
+        <ion-action-sheet trigger="open-action-sheet" header="Acciones" [buttons]="actionSheetButtons" (didDismiss)="resultOperation($event, request)">
+        </ion-action-sheet>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <p *ngIf="listRequests.length==0">No se encontraron solicitudes pendientes de revisar</p>
+</section>
