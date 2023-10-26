@@ -10,10 +10,14 @@ const firestoreKeys = {
 };
 
 const carApiKeys = {
-    apiSecretKey: '8481018b7cmsh7ca8fb340edc724p1dc07cjsn2980a5931cfb',
-    urlServerApi: 'https://car-api2.p.rapidapi.com',
-    fabricantesApi: '/api/years',
-    modelsApi: '/api/models',
+    apiSecretKey1: 'd557d8f9e9msh669df0bab098123p1171b7jsn71fd9b14e22a',
+    apiSecretKey2: 'qy6MfhcPt22kdp3ZQ2sX6www0fkdS3BCymuH6V6k',
+    
+    apiHost: 'car-api2.p.rapidapi.com',
+    
+    urlServerApi: 'https://car-api2.p.rapidapi.com/api',
+    urlServerApi1: 'https://carapi.app/api',
+    urlServerApi2: 'https://api.api-ninjas.com/v1/cars',
 };
 
 export {firestoreKeys, carApiKeys}

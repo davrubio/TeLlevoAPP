@@ -1,93 +1,73 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { carApiKeys } from 'src/app/app.secret.keys';
-import { CarModel } from 'src/app/models/driver/CarModel';
-import { CarInfo, CarModelInfo, CarQueryManufacturer, CarQueryModel, SearchResult } from 'src/app/models/nopersistent/search.result';
+import { CarModel, CarYear, ResultCarAPI } from 'src/app/models/querysapis/carapi.info';
 
 @Injectable({
   providedIn: 'root'
 })
 export class APICarService {
 
-  readonly urlServerApi = carApiKeys.urlServerApi;
-  
   readonly headerRequest = new HttpHeaders({
-    'Content-Type': 'application/json',
-    'X-RapidAPI-Host': 'car-api2.p.rapidapi.com',
-    'X-RapidAPI-Key': carApiKeys.apiSecretKey,
+    'X-RapidAPI-Key': carApiKeys.apiSecretKey1,
+    // 'X-RapidAPI-Key': 'd557d8f9e9msh669df0bab098123p1171b7jsn71fd9b14e22a',
+    'X-RapidAPI-Host': carApiKeys.apiHost,
+    // 'X-RapidAPI-Host': 'cars-by-api-ninjas.p.rapidapi.com',
+    // 'X-Api-Key': carApiKeys.apiSecretKey2,
   })
 
   constructor(private http: HttpClient) { }
 
-  getCarsInfo(): CarInfo[] {
+  getManufacturersData(): Observable<ResultCarAPI> {
     const httpOptions = {
-      header: this.headerRequest,
+      headers: this.headerRequest,
       params: {
-        limit: '300',
+        limit: '100',
         direction: 'asc',
         sort: 'id',
       }
     };
 
-    var listManufacters: CarInfo[] = [];
-    this.http.get<any>(this.urlServerApi+'/api/makes',httpOptions).subscribe((result: SearchResult) => {
-      result.data.forEach((data: CarQueryManufacturer) => {
-        const infoCar: CarInfo = {
-          idManufacterer: data.id,
-          manufacterer: data.name,
-          listModels: null,
-        }
-        infoCar.listModels = this.getModels(data.id);
-        listManufacters.push(infoCar);
-      })
-    })
-    return listManufacters;
+    return this.http.get<ResultCarAPI>(`${carApiKeys.urlServerApi}/makes`, httpOptions);
   }
 
-  getModels(manufactererID: number): CarModelInfo[] {
+  getModelsData(manufactererID: number): Observable<ResultCarAPI> {
     const httpOptions = {
-      header: this.headerRequest,
+      headers: this.headerRequest,
       params: {
-        limit: '300',
+        limit: '100',
         direction: 'asc',
         sort: 'id',
-        make_id:manufactererID,
+        make_id: manufactererID,
       }
     };
-
-    const listModels: CarModelInfo[] = [];
-
-    this.http.get<any>(this.urlServerApi+'/api/models',httpOptions).subscribe((result: SearchResult) => {
-      result.data.forEach((data: CarQueryModel) => {
-        const infoCar: CarModelInfo = {
-          name: data.name,
-          listYears: [],
-        }
-        infoCar.listYears = this.getYearsModel(data.make_id,data.name);
-
-        listModels.push(infoCar);
-      })
-    })
-    return listModels;
+    return this.http.get<ResultCarAPI>(`${carApiKeys.urlServerApi}/models`, httpOptions);
   }
 
-  getYearsModel(manufactererID: number, nameModel: string): number[] {
+  getYearsData(model: CarModel): Observable<string[]> {
     const httpOptions = {
-      header: this.headerRequest,
+      headers: this.headerRequest,
       params: {
-        limit: '300',
+        model: model.name,
+        make_id: model.make_id,
+      }
+    };
+    return this.http.get<string[]>(`${carApiKeys.urlServerApi}/years`, httpOptions);
+  }
+
+  getColorData(nameManufacturer: string, model: string, year: string): Observable<ResultCarAPI> {
+    const httpOptions = {
+      headers: this.headerRequest,
+      params: {
         direction: 'asc',
         sort: 'id',
-        model: nameModel,
-        make_id:manufactererID,
+        make: nameManufacturer,
+        model: model,
+        year: year,
       }
     };
-
-    var listYears: number[] = [];
-
-    this.http.get<any>(this.urlServerApi+'/api/years',httpOptions).subscribe((result: SearchResult) => {
-      listYears = result.data;
-    })
-    return listYears;
+    return this.http.get<ResultCarAPI>(`${carApiKeys.urlServerApi}/exterior-colors`, httpOptions);
   }
+
 }
