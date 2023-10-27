@@ -1,0 +1,60 @@
+<section>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Solicitud Nº {{requestInfo.idDoc}}</ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-label>Estado: {{getEstado()}}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Información Estudiante:</ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-label>Correo: {{requestInfo.emailStudent}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Nombre: {{requestInfo.nameStudent | titlecase}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Carrera: {{requestInfo.careerStudent}}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Información Registro Vehiculo:</ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-label>Patente: {{requestInfo.vehicleStudent.patente}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Marca: {{requestInfo.vehicleStudent.marca}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Modelo: {{requestInfo.vehicleStudent.modelo}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Año: {{requestInfo.vehicleStudent.annoVehiculo}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Asientos: {{requestInfo.vehicleStudent.asientos}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Color: {{requestInfo.vehicleStudent.color}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ng-template [ngIf]="requestInfo.vehicleStudent.permisoCirculacion" [ngIfElse]="elseBlock">
+        <ion-label >Permiso Circulación: Si</ion-label>
+      </ng-template>
+      <ng-template #elseBlock>
+        <ion-label >Permiso Circulación: No</ion-label>
+      </ng-template>
+    </ion-item>
+  </ion-list>
+
+  <ion-button id="open-action-sheet">Acciones</ion-button>
+  <ion-action-sheet trigger="open-action-sheet" header="Acciones" [buttons]="actionSheetButtons" (didDismiss)="resultOperation($event)"></ion-action-sheet>
+</section>

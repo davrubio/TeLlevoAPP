@@ -1,11 +1,13 @@
 import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormControl } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Travel, TravelInfo } from 'src/app/models/travel/travel.info';
 import { TravelService } from '../../../services/travel/travel.service';
 import { UserLocalData } from 'src/app/models/user/user.info';
 import { ManageLocalData } from 'src/app/utils/manage.localdata';
+import { Car } from 'src/app/models/driver/cardriver.info';
+
 
 declare let google: any;
 
@@ -18,9 +20,18 @@ declare let google: any;
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class MapPage implements OnInit {
+  
+  readonly payTypes: string[] = ['Efectivo','Transeferencia'];
+  /* readonly control = new FormControl(); */
+  /* readonly maskito = maskitoNumberOptionsGenerator({precision: 0}); */
+
 
   userData: UserLocalData | undefined;
   travel: TravelInfo | undefined;
+  car: Car | undefined;
+  paytypeTmp: string;
+  priceTmp: number;
+
 
   origin = {lat: -33.03362239261196, lng: -71.53317651646127}
   map: any;
@@ -79,17 +90,28 @@ export class MapPage implements OnInit {
       travelMode: google.maps.TravelMode.DRIVING
     };
 
+    this.marker.setPosition(null);
+
     console.log(this.search.getPlace().formatted_address);  // direccion
     console.log(this.search.getPlace().geometry.location.lat()); // latitud
     console.log(this.search.getPlace().geometry.location.lng()); // longitud
 
-    this.travel = Travel.createTravelInfo(this.userData?.userInfo!, this.userData?.userInfo?.vehiculo!, this.search.getPlace().formatted_address);
+    this.travel = Travel.createTravelInfo(this.userData?.userInfo!, this.search.getPlace().formatted_address, this.paytypeTmp, this.priceTmp);
     this.TravelService.saveTravel(this.travel)
+
+
 
     this.directionsService.route(request, (resp: any) => {
       this.directionsRenderer.setDirections(resp);
     });
-
-    this.marker.setPosition(null);
   }
+
+  paySelected(event: any){
+    this.paytypeTmp = event.target.value
+    console.log(this.paytypeTmp);
+  }
+
+  
+
 }
+

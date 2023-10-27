@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, collectionData, doc, getDocs, query, setDoc } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, doc, getDocs, or, query, setDoc, where } from '@angular/fire/firestore';
 import { DriverRequest } from 'src/app/models/driver/form.info';
 
 @Injectable({
@@ -16,12 +16,26 @@ export class FormService {
 
   saveRequest(driverRequest: DriverRequest){
     getDocs(query(this.PETCON_COLLECTION)).then(result => {
-      setDoc(doc(this.fireDatabase, this.NAME_COLLECTION, String(result.size+1)), driverRequest);
-    })
+      const idDoc = String(result.size+1);
+      driverRequest.idDoc = idDoc
+      setDoc(doc(this.fireDatabase, this.NAME_COLLECTION, idDoc), driverRequest);
+    });
   }
 
-  getAllRequests(){
-    return collectionData(this.PETCON_COLLECTION);
+  async getAllRequests(){
+    return getDocs(query(this.PETCON_COLLECTION));
+  }
+  
+  async getAllPendsRequests(){
+    return getDocs(query(this.PETCON_COLLECTION, or(where('statusRequest','==',0), where('statusRequest','==',3))));
+  }
+
+  async getAllAcceptedRequests(){
+    return getDocs(query(this.PETCON_COLLECTION, where('statusRequest','==',1)));
+  }
+
+  async getAllRejectedRequests(){
+    return getDocs(query(this.PETCON_COLLECTION, where('statusRequest','==',2)));
   }
 
   // getAllRequestsPend(){

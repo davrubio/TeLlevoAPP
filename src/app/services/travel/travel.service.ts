@@ -23,9 +23,9 @@ export class TravelService {
   }
 
   saveTravel(travelData: TravelInfo){
-    getDocs(query(this.TRAVEL_COLLECTION)).then(() => {
-      /* setDoc(doc(this.fireDatabase, this.NAME_COLLECTION, String(result.size+1)), travelData); */
-      addDoc(this.TRAVEL_COLLECTION, travelData);
+    getDocs(query(this.TRAVEL_COLLECTION)).then(result => {
+      setDoc(doc(this.fireDatabase, this.NAME_COLLECTION, String(result.size+1)), travelData);
+      /* addDoc(this.TRAVEL_COLLECTION, travelData); */
     });
     console.log(this.TRAVEL_COLLECTION.id);
   }
