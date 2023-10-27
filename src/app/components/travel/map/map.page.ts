@@ -42,7 +42,6 @@ export class MapPage implements OnInit {
 
   constructor(private TravelService: TravelService) {
     this.userData = ManageLocalData.getLocalData();
-    console.log(this.userData);
    }
 
   ngOnInit() {

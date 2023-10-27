@@ -27,7 +27,7 @@ export class AuthService{
 
   GoogleAuthProv(){
 
-    return this.AuthLogin(new GoogleAuthProvider());
+    return this.AuthLogin(new GoogleAuthProvider().setCustomParameters({'hd':'duocuc.cl'}));
   }
 
   AuthLogin(provider: any){

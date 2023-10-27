@@ -1,14 +1,33 @@
 <h1>Bienvenido Administrador: {{userData.userInfo?.nombre}}</h1>
 <section>
-  <h2>Solicitudes Pendientes</h2>
-  <ion-list *ngIf="listRequests.length>0" lines="full">
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Resumen Solicitudes:</ion-label>
+    </ion-list-header>
     <ion-item>
-      <ion-label *ngFor="let request of listRequests">Alumno: {{request.emailStudent}} 
-        <ion-button id="open-action-sheet">Acciones</ion-button>
-        <ion-action-sheet trigger="open-action-sheet" header="Acciones" [buttons]="actionSheetButtons" (didDismiss)="resultOperation($event, request)">
-        </ion-action-sheet>
-      </ion-label>
+      <ion-label>Total Solicitudes: {{quantityAll}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Cantidad En Espera: {{listRequests.length}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Cantidad Aprobados: {{quantityAcepted}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Cantidad Rechazados: {{quantityRejected}}</ion-label>
     </ion-item>
   </ion-list>
-  <p *ngIf="listRequests.length==0">No se encontraron solicitudes pendientes de revisar</p>
-</section>
+
+  <ion-list *ngIf="listRequests.length>0" lines="full">
+    <ion-list-header>
+      <ion-label>Solicitudes Pendientes:</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let request of listRequests">
+        <ion-button fill="clear" (click)="redirectChild(request)">Solicitud Nro {{request.idDoc}}</ion-button>
+      </ion-item>
+    </ion-list>
+    <p *ngIf="listRequests.length==0">No se encontraron solicitudes pendientes de revisar</p>
+  </section>
+  
+  <!-- <ion-button id="open-action-sheet" (onClick)="setRequest(request)">Acciones</ion-button> -->
+  <!-- <ion-action-sheet trigger="open-action-sheet" header="Acciones" [buttons]="actionSheetButtons" (didDismiss)="resultOperation($event)"></ion-action-sheet> -->
