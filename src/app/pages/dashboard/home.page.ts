@@ -20,7 +20,7 @@ export class HomePage implements OnInit {
   
   readonly titlePage = 'TeLlevoApp';
 
-  userData: UserLocalData | undefined;
+  userData: UserLocalData;
   
   constructor(private router: Router) {
     this.userData = this.router.getCurrentNavigation()?.extras.state?.['user'];
