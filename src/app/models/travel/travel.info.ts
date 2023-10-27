@@ -1,4 +1,4 @@
-import { Car } from "../driver/car.driver";
+import { Car } from "../driver/cardriver.info";
 import { UserInfo } from '../user/user.info';
 
 
@@ -16,6 +16,7 @@ export class Travel {
 
     static createTravelInfo(userInfo: UserInfo, carInfo: Car, destination: string): TravelInfo {
         return {
+            
             origin: 'Duoc UC: Sede Viña Del Mar', 
             destination: destination,
             passengers: [],
