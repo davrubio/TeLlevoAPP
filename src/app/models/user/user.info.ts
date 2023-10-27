@@ -4,11 +4,11 @@ import { capitalizeString } from "src/app/utils/formatter.string";
 
 export interface UserInfo{
     nombre: string;
-    uid: string | null;
-    lastUid: string | null;
+    uid: string;
+    lastUid: string;
     emailVerificado: boolean;
     roles: string[];
-    vehiculo: Car | null;
+    vehiculo: Car | undefined;
     carreraUniv: string;
 }
 
@@ -28,7 +28,7 @@ export class UserMaker {
             lastUid: userData.uid,
             emailVerificado: userData.emailVerified,
             roles: ['user'],
-            vehiculo: null,
+            vehiculo: undefined,
             carreraUniv: '',
         }
     }
@@ -40,7 +40,7 @@ export class UserMaker {
             lastUid: '',
             emailVerificado: false,
             roles: ['user'],
-            vehiculo: null,
+            vehiculo: undefined,
             carreraUniv: '',
         }
     }
