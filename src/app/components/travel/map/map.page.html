@@ -7,6 +7,16 @@
   </ion-toolbar>
   <ion-toolbar>
     <input type="text" id="autocomplete" class="search-bar">
+    <ion-list>
+      <ion-item>
+        <ion-select label="Tipo de pago" placeholder="pago" (ionChange)="paySelected($event)">
+          <ion-select-option *ngFor="let payType of payTypes" [value]="payType">{{ payType }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>  
+        <ion-input type="number" placeholder="Valor del viaje" [(ngModel)]="priceTmp"></ion-input>
+      </ion-item>
+    </ion-list>
     <ion-button (click)="calcuRoute()" expand="block" shape="round" size="small" color="success">
       Iniciar ruta
     </ion-button> 

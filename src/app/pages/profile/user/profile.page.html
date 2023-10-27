@@ -10,17 +10,6 @@
       <ion-label>Carrera: {{userData.userInfo?.carreraUniv}}</ion-label>
       <ion-icon name="school"></ion-icon>
     </ion-item>
-    <!-- <ion-item *ngIf="element == true">
-      <ion-select
-        label="Carrera: "
-        [interfaceOptions]="customActionSheetOptions"
-        interface="action-sheet"
-        placeholder="Selecciona una carrera"
-      >
-        <ion-select-option [value]="career" *ngFor="let career of careers">{{ career }}</ion-select-option>
-        
-      </ion-select>
-    </ion-item> -->
     <ion-item *ngIf="element">
       <ion-select (ionChange)="schoolSelected($event)" label="Escuela: " placeholder="Seleccione su escuela">
         <ion-select-option [value]="school" *ngFor="let school of schools" > {{ school.escuela }}</ion-select-option>
@@ -31,19 +20,6 @@
         <ion-select-option [value]="career" *ngFor="let career of listCareersTmp" > {{ career }}</ion-select-option>
       </ion-select>
     </ion-item>
-    <!-- <ion-item>
-      <mat-form-field>
-        <mat-label>Seleccione su Carrera: </mat-label>
-        <mat-select >
-          <mat-option>-- Ninguna --</mat-option>
-          <mat-optgroup >
-            <mat-option >
-              asdasd
-            </mat-option>
-          </mat-optgroup>
-        </mat-select>
-      </mat-form-field>
-    </ion-item> -->
   </ion-list>
 
   <div *ngIf="userData.userInfo?.roles?.includes('driver')">
