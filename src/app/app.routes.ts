@@ -29,10 +29,6 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/travel/travel.page').then( p => p.TravelPage),
     children:[
       {
-        path: 'driver',
-        loadComponent: () => import('./components/travel/driver/driver.component').then( c => c.DriverComponent),
-      },
-      {
         path: 'user',
         loadComponent: () => import('./components/travel/user/user.component').then( c => c.UserComponent),
       },

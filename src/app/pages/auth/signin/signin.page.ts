@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Router, RouterLink} from '@angular/router';
-import { listUserSys } from '../../../collection-app'
 import { AuthService } from 'src/app/services/authentication/auth.service';
 import { UserLocalData } from 'src/app/models/user/user.info';
 import { ManageSession } from 'src/app/utils/manage.session';
@@ -20,8 +19,6 @@ import { ManageLocalData } from 'src/app/utils/manage.localdata';
 export class SigninPage extends ManageSession implements OnInit {
 
   errorLogin: boolean = false;
-
-  listUser = listUserSys;
 
   constructor(
     private router: Router,
