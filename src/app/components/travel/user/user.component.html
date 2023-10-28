@@ -46,4 +46,4 @@
   </ion-list>
 </div>
 
-<ion-button *ngIf="!userData.travelActive && userData.userInfo != travel.driver" (click)="regUserInTravel()" class="center-content">Tomar viaje</ion-button>
+<ion-button *ngIf="!this.userData.travelActive && this.userData.userInfo?.uid != this.travel.driver.uid" (click)="regUserInTravel()" class="center-content">Tomar viaje</ion-button>
