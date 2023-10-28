@@ -7,6 +7,8 @@ import { ITravel } from 'src/app/models/travel/ITravel';
 import { TravelModel } from 'src/app/models/travel/TravelModel';
 import { Router } from '@angular/router';
 import { UserLocalData } from 'src/app/models/user/user.info';
+import { TravelService } from 'src/app/services/travel/travel.service';
+import { TravelInfo } from 'src/app/models/travel/travel.info';
 
 @Component({
   selector: 'app-user-dash',
@@ -18,7 +20,7 @@ import { UserLocalData } from 'src/app/models/user/user.info';
 export class UserComponent  implements OnInit {
 
   travels = listTravel;
-  
+  travelsActive: TravelInfo[] = [];
 
   userData: UserLocalData | undefined;
 
@@ -32,12 +34,19 @@ export class UserComponent  implements OnInit {
     tipoPago: '',
   }
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private travelService: TravelService) {
+    travelService.getAllActiveTravels().then(result => {
+      result.forEach(data => {
+        this.travelsActive.push(data.data() as TravelInfo);
+      })
+    }).catch;
+   }
 
   ngOnInit() { }
 
-  viewTravel(travel: TravelModel){
+  viewTravel(travel: TravelInfo){
     this.router.navigate(['/travel/'+this.userData?.rolActivo], {state:{travelInfo:travel, user:this.userData}});
   }
 
+  
 }

@@ -16,7 +16,8 @@ export interface UserLocalData {
     email: string;
     sesionActiva: boolean;
     rolActivo: string;
-    userInfo: UserInfo | null;
+    travelActive: boolean;
+    userInfo: UserInfo | undefined;
 }
 
 export class UserMaker {
@@ -50,7 +51,8 @@ export class UserMaker {
             email: '',
             sesionActiva: false,
             rolActivo: '',
-            userInfo: null,
+            travelActive: false,
+            userInfo: undefined,
         }
     }
 }
