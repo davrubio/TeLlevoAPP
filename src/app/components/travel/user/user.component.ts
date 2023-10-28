@@ -3,40 +3,42 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { listTravel } from 'src/app/collection-app';
-import { TravelModel } from 'src/app/models/travel/TravelModel';
-import { UserModel } from 'src/app/models/user/UserModel';
+import { maskitoNumberOptionsGenerator } from '@maskito/kit';
+import { TravelInfo } from 'src/app/models/travel/travel.info';
+import { UserLocalData } from 'src/app/models/user/user.info';
+import { MaskitoModule } from '@maskito/angular';
+import { TravelService } from '../../../services/travel/travel.service';
+import { ManageLocalData } from 'src/app/utils/manage.localdata';
 
 @Component({
   selector: 'app-user-travel',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule, MaskitoModule],
 })
 export class UserComponent  implements OnInit {
 
-  travel: TravelModel | undefined;
-  driver: UserModel | undefined;
-  userInfo: UserModel | undefined;
+  readonly options = maskitoNumberOptionsGenerator({precision: 0});
 
-  constructor(private router: Router) { }
+  travel: TravelInfo;
+  userData: UserLocalData;
+
+  constructor(private router: Router, private travelService: TravelService) { }
 
   ngOnInit() {
   }
 
   regUserInTravel(){
-    if(this.travel && this.userInfo && this.driver?.car){
-      if(this.travel.asientosDisp != 0){
-        let index = listTravel.indexOf(this.travel);
-        this.travel.pasajeros?.push(this.userInfo);
-        this.travel.asientosDisp -= 1;
-        
-        listTravel[index] = this.travel;
-
-        this.router.navigate(['/dash/'+this.userInfo.activeRole],{state:{user:this.userInfo}})
-      }
+    if(this.travel.availableSeats == 1){
+      this.travel.stateTravel = 2;
     }
+    this.travel.availableSeats = this.travel.availableSeats-1;
+    this.travel.passengers.push(this.userData.userInfo!);
+    this.travelService.updateTravel(this.travel);
+    this.userData.travelActive = true;
+    ManageLocalData.saveExistsLocalData(this.userData);
+    this.router.navigate(['/dash/'+this.userData.rolActivo],{state:{user:this.userData}});
   }
 
 }

@@ -12,6 +12,7 @@ export class ManageLocalData {
             email: email,
             sesionActiva: true,
             rolActivo: '',
+            travelActive: false,
             userInfo: userInfo,
           };
         localStorage.clear();

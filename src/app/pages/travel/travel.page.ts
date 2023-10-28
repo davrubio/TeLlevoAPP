@@ -7,6 +7,8 @@ import { UserModel } from 'src/app/models/user/UserModel';
 import { Router, RouterOutlet } from '@angular/router';
 import { UserComponent } from '../../components/travel/user/user.component';
 import { HeaderComponent } from "../../components/base/header/header.component";
+import { UserLocalData } from 'src/app/models/user/user.info';
+import { TravelInfo } from 'src/app/models/travel/travel.info';
 
 @Component({
     selector: 'app-travel',
@@ -19,21 +21,21 @@ export class TravelPage implements OnInit {
 
   readonly titlePage = 'Detalles del viaje';
 
-  userInfo: UserModel | undefined;
-  travelInfo: TravelModel | undefined;
+  userData: UserLocalData;
+  travelInfo: TravelInfo;
 
-  constructor(private router: Router) { }
-
-  ngOnInit() {
-    this.userInfo = this.router.getCurrentNavigation()?.extras.state?.['user'];
+  constructor(private router: Router) {
+    this.userData = this.router.getCurrentNavigation()?.extras.state?.['user'];
     this.travelInfo = this.router.getCurrentNavigation()?.extras.state?.['travelInfo'];
   }
 
+  ngOnInit() {
+  }
+
   subscribeToEmiter(component:any){
-    component.userInfo = this.userInfo;
+    component.userData = this.userData;
     if(component instanceof UserComponent){
       component.travel = this.travelInfo;
-      component.driver = this.travelInfo?.conductor;
     }
   }
 }

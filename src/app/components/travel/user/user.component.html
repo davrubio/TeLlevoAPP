@@ -1,56 +1,49 @@
-<div *ngIf="driver" class="ion-padding">
-  <h1 class="ion-padding">Datos Conductor:</h1>
+<div class="ion-padding">
   <ion-list class="item">
+    <ion-list-header><ion-label>Datos Conductor:</ion-label></ion-list-header>
     <ion-item>
-      <ion-label>Nombre: {{driver.name}}</ion-label>
+      <ion-label>Nombre: {{ travel.driver.nombre }}</ion-label>
     </ion-item>
     <ion-item>
-      <ion-label>Apellido: {{driver.last_name}}</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Carrera: {{driver.career}}</ion-label>
+      <ion-label>Carrera: {{ travel.driver.carreraUniv }}</ion-label>
     </ion-item>
   </ion-list>
-  <h1 class="ion-padding">Datos Vehiculo:</h1>
+  <ion-list-header><ion-label>Datos del vehiculo:</ion-label></ion-list-header>
   <ion-list>
     <ion-item>
-      <ion-label>Modelo: {{driver.car?.modelo}}</ion-label>
+      <ion-label>Modelo: {{ travel.driver.vehiculo?.modelo }}</ion-label>
     </ion-item>
     <ion-item>
-      <ion-label>Patente: {{driver.car?.patente}}</ion-label>
+      <ion-label>Patente: {{ travel.driver.vehiculo?.patente }}</ion-label>
     </ion-item>
     <ion-item>
-      <ion-label>Marca: {{driver.car?.marca}}</ion-label>
+      <ion-label>Marca: {{ travel.driver.vehiculo?.marca }}</ion-label>
     </ion-item>
     <ion-item>
-      <ion-label>Año vehiculo: {{driver.car?.annoVehiculo}}</ion-label>
+      <ion-label>Año vehiculo: {{ travel.driver.vehiculo?.annoVehiculo }}</ion-label>
     </ion-item>
     <ion-item>
-      <ion-label>Asientos: {{driver.car?.asientos}}</ion-label>
+      <ion-label>Asientos: {{ travel.driver.vehiculo?.asientos }}</ion-label>
     </ion-item>
   </ion-list>
-  <h1 class="ion-padding">Datos Viaje:</h1>
+  <ion-list-header><ion-label>Datos del viaje:</ion-label></ion-list-header>
   <ion-list>
     <ion-item>
-      <ion-label>Origen: {{travel?.origen}}</ion-label>
+      <ion-label>Origen: {{ travel.origin }}</ion-label>
     </ion-item>
     <ion-item>
-      <ion-label>Destino: {{travel?.destino}}</ion-label>
+      <ion-label>Destino: {{ travel.destination }}</ion-label>
     </ion-item>
     <ion-item>
-      <ion-label>Fecha: {{travel?.fecha_hora}}</ion-label>
+      <ion-label>Asientos disponibles: {{ travel.availableSeats }}</ion-label>
     </ion-item>
     <ion-item>
-      <ion-label>Asientos disponibles: {{travel?.asientosDisp}}</ion-label>
+      <ion-label>Tipo de pago: {{ travel.payType }}</ion-label>
     </ion-item>
     <ion-item>
-      <ion-label>Tipo de pago: {{travel?.tipoPago}}</ion-label>
+      <ion-label>Valor: ${{ travel.price | maskito: options }}</ion-label>
     </ion-item>
   </ion-list>
 </div>
 
-<div *ngIf="travel">
-  <div class="ion-padding" *ngIf="travel.asientosDisp > 0">
-    <ion-button (click)="regUserInTravel()" class="center-content">Tomar viaje</ion-button>
-  </div>
-</div>
+<ion-button *ngIf="!userData.travelActive && userData.userInfo != travel.driver" (click)="regUserInTravel()" class="center-content">Tomar viaje</ion-button>
