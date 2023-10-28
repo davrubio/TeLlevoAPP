@@ -20,8 +20,8 @@ export class DriverComponent  implements OnInit {
 
   ngOnInit() { }
 
-  regTravel(){
-    this.router.navigate(['/travel/'+this.userData?.rolActivo], {state:{user: this.userData}});
+  redirectForm(){
+    this.router.navigate(['/map'], {state:{user: this.userData}});
   }
   
 }

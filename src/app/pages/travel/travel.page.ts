@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { TravelModel } from 'src/app/models/travel/TravelModel';
-import { UserModel } from 'src/app/models/user/UserModel';
 import { Router, RouterOutlet } from '@angular/router';
 import { UserComponent } from '../../components/travel/user/user.component';
 import { HeaderComponent } from "../../components/base/header/header.component";
