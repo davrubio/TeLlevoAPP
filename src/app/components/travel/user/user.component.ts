@@ -26,8 +26,7 @@ export class UserComponent  implements OnInit {
 
   constructor(private router: Router, private travelService: TravelService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   regUserInTravel(){
     if(this.travel.availableSeats == 1){
