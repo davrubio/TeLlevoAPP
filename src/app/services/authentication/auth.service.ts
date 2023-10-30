@@ -104,16 +104,21 @@ export class AuthService{
     // console.log('Parametros')
     // console.log(next)
     // console.log(state)
-    const roles = ['admin','driver','user']
+    const roles = ['admin','driver','user'];
     const userData = ManageLocalData.getLocalData();
     if(userData.sesionActiva) {
-      if(state.url.includes(roles[0]) || state.url.includes(roles[1]) || state.url.includes(roles[2]))
+      if(state.url.includes(roles[0]) || state.url.includes(roles[1]) || state.url.includes(roles[2])) {
         if(state.url.includes(userData.rolActivo)){
           return true;
         }  else {
-          this.router.navigate(['/login']);
+          if(userData.userInfo?.roles.length! > 1) 
+            this.router.navigate(['/pickrole']);
+          else 
+            this.router.navigate([`/dash/${userData.rolActivo}`]);
+
           return false;
         }
+      }
         
       return true;
     }
