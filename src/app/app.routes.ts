@@ -1,5 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { AuthGuard } from './services/authentication/auth.service';
 
 export const routes: Routes = [
   {
@@ -12,14 +13,17 @@ export const routes: Routes = [
     children:[
       {
         path: 'admin',
+        canActivate: [AuthGuard],
         loadComponent: () => import('./components/dashboard/admin/admin.component').then(c => c.AdminComponent),
       },
       {
         path: 'driver',
+        canActivate: [AuthGuard],
         loadComponent: () => import('./components/dashboard/driver/driver.component').then(c => c.DriverComponent),
       },
       {
         path: 'user',
+        canActivate: [AuthGuard],
         loadComponent:  () => import('./components/dashboard/user/user.component').then(c => c.UserComponent),
       },
     ],
@@ -30,6 +34,7 @@ export const routes: Routes = [
     children:[
       {
         path: 'user',
+        canActivate: [AuthGuard],
         loadComponent: () => import('./components/travel/user/user.component').then( c => c.UserComponent),
       },
     ],
@@ -40,24 +45,29 @@ export const routes: Routes = [
     children: [
       {
         path: 'pending',
+        canActivate: [AuthGuard],
         loadComponent: () => import('./components/request/pendingreq/pendingreq.component').then( c => c.PendingreqComponent),
       }
     ]
   },
   {
     path: 'pickrole',
+    canActivate: [AuthGuard],
     loadComponent: () => import('./pages/auth/pickrole/pickrole.page').then( p => p.PickrolePage),
   },
   {
     path: 'profile',
+    canActivate: [AuthGuard],
     loadComponent: () => import('./pages/profile/user/profile.page').then( p => p.ProfilePage),
   },
   {
     path: 'form/driver',
+    canActivate: [AuthGuard],
     loadComponent: () => import('./pages/form/driver/driver.page').then( p => p.DriverPage)
   },
   {
     path: 'map',
+    canActivate: [AuthGuard],
     loadComponent: () => import('./components/travel/map/map.page').then( p => p.MapPage)
   },
   {

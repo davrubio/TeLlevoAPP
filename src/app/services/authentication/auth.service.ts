@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Auth, GoogleAuthProvider, getAuth, signInWithPopup } from '@angular/fire/auth';
 import { UserService } from '../user/user.service';
 import { UserInfo, UserLocalData, UserMaker } from 'src/app/models/user/user.info';
-import { Router } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
 import { ManageLocalData } from 'src/app/utils/manage.localdata';
 
 @Injectable({
@@ -99,4 +99,34 @@ export class AuthService{
     } else //Mandar a vista para seleccionar tipo de vista role a ocupar en la app
       this.router.navigate(['/pickrole'], {state: {user: userLoginData}});
   }
+
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean{
+    // console.log('Parametros')
+    // console.log(next)
+    // console.log(state)
+    const roles = ['admin','driver','user'];
+    const userData = ManageLocalData.getLocalData();
+    if(userData.sesionActiva) {
+      if(state.url.includes(roles[0]) || state.url.includes(roles[1]) || state.url.includes(roles[2])) {
+        if(state.url.includes(userData.rolActivo)){
+          return true;
+        }  else {
+          if(userData.userInfo?.roles.length! > 1) 
+            this.router.navigate(['/pickrole']);
+          else 
+            this.router.navigate([`/dash/${userData.rolActivo}`]);
+
+          return false;
+        }
+      }
+        
+      return true;
+    }
+    this.router.navigate(['/login']);
+    return false; 
+  }
+}
+
+export const AuthGuard: CanActivateFn = (next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean => {
+  return inject(AuthService).canActivate(next, state);
 }
