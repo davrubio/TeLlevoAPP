@@ -61,7 +61,7 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/profile/user/profile.page').then( p => p.ProfilePage),
   },
   {
-    path: 'form/driver',
+    path: 'form/conductor',
     canActivate: [AuthGuard],
     loadComponent: () => import('./pages/form/driver/driver.page').then( p => p.DriverPage)
   },
