@@ -38,7 +38,7 @@ export class HeaderComponent extends ManageSession implements OnInit {
   }
 
   redirecToDriverForm(){
-    this.router.navigate(['/form/driver'], {state: {user: this.userData}});
+    this.router.navigate(['/form/conductor'], {state: {user: this.userData}});
   }
   
 }
