@@ -12,7 +12,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-menu side="end" contentId="main-content">
+<ion-menu contentId="main-content" side="end">
   <ion-header>
     <ion-toolbar>
       <ion-title>Menú</ion-title>
@@ -29,7 +29,7 @@
           Quiero ser conductor
         </ion-button>
       </div>
-      <ion-toggle labelPlacement="stacked" alignment="center" aria-label="Medium toggle" color="medium" [checked]="false">Modo Oscuro</ion-toggle>
+        <ion-toggle (ionChange)="toggleChange()" labelPlacement="stacked" aria-label="Medium toggle" [checked]="false">Modo Oscuro</ion-toggle>
   </ion-content>
   <ion-footer>
     <ion-toolbar>
