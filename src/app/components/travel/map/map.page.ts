@@ -31,6 +31,7 @@ export class MapPage implements OnInit {
   car: Car | undefined;
   paytypeTmp: string;
   priceTmp: number;
+  destinationLatLng: {};
 
 
   origin = {lat: -33.03362239261196, lng: -71.53317651646127}
@@ -63,7 +64,7 @@ export class MapPage implements OnInit {
 
     this.directionsRenderer.setMap(this.map);
     /* let indicactions: HTMLElement = document.getElementById('indicactions'); */
-    this.directionsRenderer.setPanel();
+    /* this.directionsRenderer.setPanel(); */
   }
 
   onSearchChange(localMap: any, localMarker: any){
@@ -95,8 +96,12 @@ export class MapPage implements OnInit {
     console.log(this.search.getPlace().formatted_address);  // direccion
     console.log(this.search.getPlace().geometry.location.lat()); // latitud
     console.log(this.search.getPlace().geometry.location.lng()); // longitud
+    this.destinationLatLng =  {
+      lat: this.search.getPlace().geometry.location.lat(),
+      lng: this.search.getPlace().geometry.location.lng(), 
+    };
 
-    this.travel = Travel.createTravelInfo(this.userData?.userInfo!, this.search.getPlace().formatted_address, this.paytypeTmp, this.priceTmp);
+    this.travel = Travel.createTravelInfo(this.userData?.userInfo!, this.search.getPlace().formatted_address, this.paytypeTmp, this.priceTmp, this.destinationLatLng);
     this.TravelService.saveTravel(this.travel)
 
 
