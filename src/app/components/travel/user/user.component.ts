@@ -19,7 +19,7 @@ declare let google: any;
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, MaskitoModule],
 })
-export class UserComponent  implements OnInit {
+export class UserComponent implements OnInit {
 
   readonly options = maskitoNumberOptionsGenerator({precision: 0});
 
@@ -52,7 +52,7 @@ export class UserComponent  implements OnInit {
 
     this.map = new google.maps.Map(map, {
       center: this.travel.originLatLng,
-      zoom: 17,
+      zoom: 12,
     });
 
     let request = {
@@ -60,6 +60,10 @@ export class UserComponent  implements OnInit {
       destination: this.travel.destinationLatLng,
       travelMode: google.maps.TravelMode.DRIVING,
     }
+
+    this.directionsService.route(request, (resp: any) => {
+      this.directionsRenderer.setDirections(resp);
+    });
 
     this.directionsRenderer.setMap(this.map);
   }

@@ -21,9 +21,7 @@ declare let google: any;
 })
 export class MapPage implements OnInit {
   
-  readonly payTypes: string[] = ['Efectivo','Transeferencia'];
-  /* readonly control = new FormControl(); */
-  /* readonly maskito = maskitoNumberOptionsGenerator({precision: 0}); */
+  readonly payTypes: string[] = ['Efectivo','Transferencia'];
 
 
   userData: UserLocalData | undefined;
@@ -63,8 +61,6 @@ export class MapPage implements OnInit {
     });
 
     this.directionsRenderer.setMap(this.map);
-    /* let indicactions: HTMLElement = document.getElementById('indicactions'); */
-    /* this.directionsRenderer.setPanel(); */
   }
 
   onSearchChange(localMap: any, localMarker: any){
