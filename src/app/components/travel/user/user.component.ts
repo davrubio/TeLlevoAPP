@@ -10,6 +10,8 @@ import { MaskitoModule } from '@maskito/angular';
 import { TravelService } from '../../../services/travel/travel.service';
 import { ManageLocalData } from 'src/app/utils/manage.localdata';
 
+declare let google: any;
+
 @Component({
   selector: 'app-user-travel',
   templateUrl: './user.component.html',
@@ -23,10 +25,15 @@ export class UserComponent  implements OnInit {
 
   travel: TravelInfo;
   userData: UserLocalData;
+  map: any;
+  directionsService = new google.maps.DirectionsService();
+  directionsRenderer = new google.maps.DirectionsRenderer();
 
   constructor(private router: Router, private travelService: TravelService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.loadMap();
+   }
 
   regUserInTravel(){
     if(this.travel.availableSeats == 1){
@@ -38,6 +45,23 @@ export class UserComponent  implements OnInit {
     this.userData.travelActive = true;
     ManageLocalData.saveExistsLocalData(this.userData);
     this.router.navigate(['/dash/'+this.userData.rolActivo],{state:{user:this.userData}});
+  }
+
+  loadMap() {
+    let map: HTMLElement = document.getElementById('map')!;
+
+    this.map = new google.maps.Map(map, {
+      center: this.travel.originLatLng,
+      zoom: 17,
+    });
+
+    let request = {
+      origin: this.travel.originLatLng,
+      destination: this.travel.destinationLatLng,
+      travelMode: google.maps.TravelMode.DRIVING,
+    }
+
+    this.directionsRenderer.setMap(this.map);
   }
 
 }
