@@ -3,7 +3,9 @@
 <ion-content class="ion-padding" [fullscreen]="true">
   <ion-card>
     <ion-list class="ion-padding-bottom">
-      <h1 class="ion-padding">Datos Personales:</h1>
+      <ion-list-header>
+        <ion-label class="ion-padding-bottom">Datos Personales:</ion-label>
+      </ion-list-header>
       <ion-item>
         <ion-label>Nombre: {{userData.userInfo?.nombre}}</ion-label>
       </ion-item>
@@ -23,7 +25,10 @@
       </ion-item>
     </ion-list>
     <ion-list class="item">
-      <h1 class="ion-padding">Datos de la cuenta:</h1>
+      <!-- <h1 class="ion-padding">Datos de la cuenta:</h1> -->
+      <ion-list-header>
+        <ion-label class="ion-padding-bottom">Datos de la cuenta:</ion-label>
+      </ion-list-header>
       <ion-item>
         <ion-label>Email: {{userData.email}}</ion-label>
         <ion-icon slot="end" name="mail"></ion-icon>

@@ -24,7 +24,8 @@ export class UserComponent  implements OnInit {
   travel: TravelInfo;
   userData: UserLocalData;
 
-  constructor(private router: Router, private travelService: TravelService) { }
+  constructor(private router: Router, private travelService: TravelService) {
+  }
 
   ngOnInit() { }
 
