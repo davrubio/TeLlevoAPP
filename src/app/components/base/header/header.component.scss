@@ -7,7 +7,13 @@ ion-toggle{
         --handle-background-checked:#fff url("/assets/ios-moon.svg") no-repeat center / contain !important;
     }
 }
+.spacer{
+    flex: 1 1 auto;
+}
 
+mat-drawer {
+    padding-top: 16%;
+}
 // .toggle-inner{
 //     --handle-background-checked: url("/assets/ios-moon.svg") no-repeat center / contain !important;
 // }

@@ -8,13 +8,17 @@ import { APICarService } from 'src/app/services/API/apicar.service';
 import { AuthService } from 'src/app/services/authentication/auth.service';
 import { ManageLocalData } from 'src/app/utils/manage.localdata';
 import { ManageSession } from 'src/app/utils/manage.session';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule, MatSidenavModule, MatToolbarModule, MatIconModule, MatButtonModule]
 })
 export class HeaderComponent extends ManageSession implements OnInit {
 
@@ -22,6 +26,7 @@ export class HeaderComponent extends ManageSession implements OnInit {
   titlePage!: string;
   darkMode = false;
   dialog: boolean = false;
+  showFiller = false;
 
   userData: UserLocalData;
 
