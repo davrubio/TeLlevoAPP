@@ -29,6 +29,7 @@ export class UserComponent implements OnInit {
   directionsService = new google.maps.DirectionsService();
   directionsRenderer = new google.maps.DirectionsRenderer();
 
+
   constructor(private router: Router, private travelService: TravelService) { }
 
   ngOnInit() {
@@ -53,6 +54,8 @@ export class UserComponent implements OnInit {
     this.map = new google.maps.Map(map, {
       center: this.travel.originLatLng,
       zoom: 12,
+      streetViewControl: false,
+      mapTypeControl: false,
     });
 
     let request = {

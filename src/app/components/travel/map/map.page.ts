@@ -52,12 +52,14 @@ export class MapPage implements OnInit {
     
     this.map = new google.maps.Map(map, {
       center: this.origin,
-      zoom: 17
+      zoom: 17,
+      streetViewControl: false,
+      mapTypeControl: false,
     });
 
     this.marker = new google.maps.Marker({
       position: this.origin,
-      map: this.map
+      map: this.map,
     });
 
     this.directionsRenderer.setMap(this.map);
@@ -65,7 +67,10 @@ export class MapPage implements OnInit {
 
   onSearchChange(localMap: any, localMarker: any){
     let autocomplete: HTMLElement = document.getElementById('autocomplete')!;
-    const search = new google.maps.places.Autocomplete(autocomplete);
+    const options = {
+      componentRestrictions: { country: "cl" },
+    }
+    const search = new google.maps.places.Autocomplete(autocomplete, options);
     this.search = search;
 
     search.addListener('place_changed', () => {
@@ -84,7 +89,7 @@ export class MapPage implements OnInit {
     let request = {
       origin: this.origin,
       destination: place,
-      travelMode: google.maps.TravelMode.DRIVING
+      travelMode: google.maps.TravelMode.DRIVING,
     };
 
     this.marker.setPosition(null);
@@ -111,8 +116,5 @@ export class MapPage implements OnInit {
     this.paytypeTmp = event.target.value
     console.log(this.paytypeTmp);
   }
-
-  
-
 }
 
