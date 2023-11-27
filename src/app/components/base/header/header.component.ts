@@ -5,7 +5,6 @@ import { NavigationEnd, Router } from '@angular/router';
 import { IonicModule, MenuController, NavController } from '@ionic/angular';
 import { UserLocalData } from 'src/app/models/user/user.info';
 import { AuthService } from 'src/app/services/authentication/auth.service';
-import { ManageSession } from 'src/app/utils/manage.session';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -35,7 +34,7 @@ export class HeaderComponent implements OnInit {
     private router: Router, 
     private navCtrl: NavController,
     private menuCrtl: MenuController,
-    private manageLocalData : UtilsService
+    private manageLocalData : UtilsService,
     private location: Location,
   ) {
     

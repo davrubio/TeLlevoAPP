@@ -5,7 +5,6 @@ import { IonicModule } from '@ionic/angular';
 import { Router, RouterLink} from '@angular/router';
 import { AuthService } from 'src/app/services/authentication/auth.service';
 import { UserLocalData } from 'src/app/models/user/user.info';
-import { ManageSession } from 'src/app/utils/manage.session';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 
 
