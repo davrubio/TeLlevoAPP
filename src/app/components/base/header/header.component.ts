@@ -4,14 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
 import { IonicModule, MenuController, NavController } from '@ionic/angular';
 import { UserLocalData } from 'src/app/models/user/user.info';
-import { APICarService } from 'src/app/services/API/apicar.service';
 import { AuthService } from 'src/app/services/authentication/auth.service';
-import { ManageLocalData } from 'src/app/utils/manage.localdata';
 import { ManageSession } from 'src/app/utils/manage.session';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { UtilsService } from 'src/app/services/utils/utils.service';
+
 
 @Component({
   selector: 'app-header',
@@ -20,7 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, MatSidenavModule, MatToolbarModule, MatIconModule, MatButtonModule]
 })
-export class HeaderComponent extends ManageSession implements OnInit {
+export class HeaderComponent implements OnInit {
 
   @Input({required:true})
   titlePage!: string;
@@ -28,22 +28,23 @@ export class HeaderComponent extends ManageSession implements OnInit {
   dialog: boolean = false;
   showFiller = false;
 
-  userData: UserLocalData;
+  userData: UserLocalData | undefined;
 
   constructor( 
-    authService: AuthService,
-    private carService: APICarService,
+    private authService: AuthService,
     private router: Router, 
     private navCtrl: NavController,
     private menuCrtl: MenuController,
+    private manageLocalData : UtilsService
     private location: Location,
   ) {
-    super(authService);
-    this.userData = ManageLocalData.getLocalData();
+    
   }
   
-  ngOnInit() {
+  async ngOnInit() {
     this.checkAppMode();
+    let localData: any = await this.manageLocalData.getFromLocalStorage('userdata');
+    this.userData = JSON.parse(localData);
   }
 
   goBack(){
@@ -55,9 +56,16 @@ export class HeaderComponent extends ManageSession implements OnInit {
     });
   }
 
-  checkAppMode(){
-    const checkIsDarkMode = localStorage.getItem('darkModeActivated');
-    checkIsDarkMode == 'true' ? (this.darkMode = true) : (this.darkMode = false);
+  async checkAppMode(){
+    let data: any = await this.manageLocalData.getFromLocalStorage('darkModeActivated')
+    let checkIsDarkMode: {value: string} = JSON.parse(data);
+    
+    if(checkIsDarkMode == null){
+      checkIsDarkMode = {value:'false'};
+      this.manageLocalData.saveLocalStorage('darkModeActivated', checkIsDarkMode.value)
+    }
+
+    checkIsDarkMode.value == 'true' ? (this.darkMode = true) : (this.darkMode = false);
     document.body.classList.toggle('dark', this.darkMode);
   }
 
@@ -65,9 +73,9 @@ export class HeaderComponent extends ManageSession implements OnInit {
     this.darkMode = !this.darkMode;
     document.body.classList.toggle('dark', this.darkMode);
     if(this.darkMode){
-      localStorage.setItem('darkModeActivated', 'true');
+      this.manageLocalData.saveLocalStorage('darkModeActivated', {value:'true'});
     } else {
-      localStorage.setItem('darkModeActivated', 'false');
+      this.manageLocalData.saveLocalStorage('darkModeActivated', {value:'false'});
     }
   }
   
@@ -78,5 +86,8 @@ export class HeaderComponent extends ManageSession implements OnInit {
   redirecToDriverForm(){
     this.router.navigate(['/form/conductor'], {state: {user: this.userData}});
   }
-  
+
+  cerrarSesion(){
+    this.authService.signOut();
+  }
 }

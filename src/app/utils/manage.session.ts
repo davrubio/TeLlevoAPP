@@ -8,7 +8,5 @@ export class ManageSession {
         this.authService = authServ;
     }
 
-    cerrarSesion(){
-        this.authService.signOut();
-    }
+    
 }

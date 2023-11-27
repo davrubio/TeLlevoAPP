@@ -5,8 +5,8 @@ import { IonicModule } from '@ionic/angular';
 import { Travel, TravelInfo } from 'src/app/models/travel/travel.info';
 import { TravelService } from '../../../services/travel/travel.service';
 import { UserLocalData } from 'src/app/models/user/user.info';
-import { ManageLocalData } from 'src/app/utils/manage.localdata';
 import { Car } from 'src/app/models/driver/cardriver.info';
+import { UtilsService } from 'src/app/services/utils/utils.service';
 
 
 declare let google: any;
@@ -23,14 +23,12 @@ export class MapPage implements OnInit {
   
   readonly payTypes: string[] = ['Efectivo','Transferencia'];
 
-
   userData: UserLocalData | undefined;
   travel: TravelInfo | undefined;
   car: Car | undefined;
   paytypeTmp: string;
   priceTmp: number;
   destinationLatLng: {};
-
 
   origin = {lat: -33.03362239261196, lng: -71.53317651646127}
   map: any;
@@ -39,11 +37,11 @@ export class MapPage implements OnInit {
   directionsService = new google.maps.DirectionsService();
   directionsRenderer = new google.maps.DirectionsRenderer();
 
-  constructor(private TravelService: TravelService) {
-    this.userData = ManageLocalData.getLocalData();
-   }
+  constructor(private TravelService: TravelService, private manageLocalData : UtilsService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    let localData: any = await this.manageLocalData.getFromLocalStorage('userdata');
+    this.userData = JSON.parse(localData);
     this.loadMap();
     this.onSearchChange(this.map, this.marker);
   }
