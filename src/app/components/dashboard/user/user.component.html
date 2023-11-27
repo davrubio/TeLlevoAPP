@@ -8,8 +8,6 @@
         <ion-label class="title">Viajes disponibles</ion-label>
       </ion-list-header>
       <ion-item *ngFor="let travel of travelsActive" class="item">
-        <!-- <ion-label>{{ travel.origin }} - {{ travel.destination }}</ion-label> -->
-        <!-- <ion-button (click)="viewTravel(travel)">Ver detalles</ion-button> -->
         <ion-button fill="clear" (click)="viewTravel(travel)">{{ travel.destination }}</ion-button>
       </ion-item>
     </ion-list>
