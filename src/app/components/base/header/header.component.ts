@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
@@ -11,6 +11,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { UtilsService } from 'src/app/services/utils/utils.service';
+
 
 @Component({
   selector: 'app-header',
@@ -35,6 +36,7 @@ export class HeaderComponent implements OnInit {
     private navCtrl: NavController,
     private menuCrtl: MenuController,
     private manageLocalData : UtilsService
+    private location: Location,
   ) {
     
   }

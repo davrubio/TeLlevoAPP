@@ -1,18 +1,64 @@
-<ion-header [translucent]="true" class="ion-no-border">
+
+<ion-header color="dark">
+
+  <!-- <mat-sidenav #sidenav mode="push" position="end" [ngStyle]="{ width: '80%' }">
+    <mat-toolbar color="accent">
+      <span>Menú</span>
+      <span class="spacer"></span>
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar>
+  </mat-sidenav> -->
+  <mat-drawer-container>
+    <mat-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/"></ion-back-button>
+      </ion-buttons>
+      <ion-title><ion-icon *ngIf="titlePage != 'Roles'" name="car"></ion-icon>{{titlePage}}</ion-title>
+      <span class="spacer"></span>
+      <button mat-icon-button (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </mat-toolbar>
+  </mat-drawer-container>
+
+</ion-header>
+  
+<mat-drawer #drawer mode="push" position="end" [ngStyle]="{ width: '80%'}">
+  <ion-header class="ion-padding">
+    <ion-title>Menú</ion-title>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <ion-button (click)="redirecToProfile()" size="medium" expand="block" fill="clear">
+      <ion-icon slot="start" name="person"></ion-icon>
+      Perfil
+    </ion-button>
+      <ion-button *ngIf="!userData.userInfo?.roles?.includes('driver')" (click)="redirecToDriverForm()" size="medium" expand="block" fill="clear">
+        <ion-icon slot="start" name="car"></ion-icon>
+        Quiero ser conductor
+      </ion-button>
+    <ion-toggle (ionChange)="toggleChange()" labelPlacement="stacked" aria-label="Medium toggle" [checked]="false">Modo Oscuro</ion-toggle>
+  </ion-content>
+</mat-drawer>
+<!-- <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
     </ion-buttons>
     <ion-title><ion-icon *ngIf="titlePage != 'Roles'" name="car"></ion-icon>{{titlePage}}</ion-title>
+    
 
     <ion-buttons slot="end">
       <ion-menu-button></ion-menu-button>
-      <!-- <ion-button (click)="cerrarSesion()" fill="clear"><ion-icon name="exit"></ion-icon></ion-button> -->
     </ion-buttons>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
-<ion-menu side="end" contentId="main-content">
+<!-- <ion-menu side="end" contentId="main-content">
   <ion-header>
     <ion-toolbar>
       <ion-title>Menú</ion-title>
@@ -28,8 +74,7 @@
           <ion-icon slot="start" name="car"></ion-icon>
           Quiero ser conductor
         </ion-button>
-      </div>
-      <ion-toggle labelPlacement="stacked" alignment="center" aria-label="Medium toggle" color="medium" [checked]="false">Modo Oscuro</ion-toggle>
+      <ion-toggle (ionChange)="toggleChange()" labelPlacement="stacked" aria-label="Medium toggle" [checked]="false">Modo Oscuro</ion-toggle>
   </ion-content>
   <ion-footer>
     <ion-toolbar>
@@ -41,4 +86,4 @@
   </ion-footer>
 </ion-menu>
 
-<div class="ion-page" id="main-content"></div>
+<div class="ion-page" id="main-content"></div> -->

@@ -1,6 +1,6 @@
 <app-header titlePage="{{titlePage}}"></app-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="ion-padding">
   <h1>Pagina formulario conductor</h1>
 
   <form [formGroup]="checkoutForm" (ngSubmit)="onSubmitForm()">
@@ -63,7 +63,7 @@
         <ion-checkbox justify="space-between" formControlName="permisoCirculacion">Permiso de Circulacion:</ion-checkbox>
       </ion-item>
     </ion-list>
-    <ion-button type="submit" fill="outline">Enviar Solicitud</ion-button>
+    <ion-button type="submit" fill="solid">Enviar Solicitud</ion-button>
   </form>
 
 </ion-content>
