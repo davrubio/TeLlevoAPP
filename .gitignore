@@ -71,3 +71,5 @@ Thumbs.db
 .firebase
 *-debug.log
 .runtimeconfig.json
+.scannerwork/.sonar_lock
+.scannerwork/report-task.txt
