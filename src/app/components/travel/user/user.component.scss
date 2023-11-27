@@ -2,38 +2,44 @@ ion-toolbar {
     --background: black;
 }
 
-/* ion-content {
+ion-content {
     --background: white;
-} */
+}
 
-/* ion-back-button {
+ion-back-button {
     color: white;
-} */
+}
 
-/* .item {
+.item {
     --background: white;
     color: black;
-} */
+}
 
-/* h1 {
+h1 {
     margin-top: 16px;
     padding-bottom: 0;
     margin-bottom: 0;
     color: black;
-} */
-/* 
+}
+
 ion-title {
     padding: 0px;
     color: white;
-} */
+}
 
-/* .center-content {
+.center-content {
     display: flex;
     align-items: center;
     justify-content: center;
-} */
+}
 
 ion-button {
     --background: black;
     color: white;
 }
+
+#map {
+    display: block;
+    width: 310px;
+    height: 300px;
+  }
