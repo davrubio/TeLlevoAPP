@@ -1,4 +1,4 @@
-<div class="ion-padding">
+<div>
   <ion-list class="item">
     <ion-list-header><ion-label>Datos Conductor:</ion-label></ion-list-header>
     <ion-item>
@@ -44,6 +44,8 @@
       <ion-label>Valor: ${{ travel.price | maskito: options }}</ion-label>
     </ion-item>
   </ion-list>
+  <ion-list-header><ion-label>Mapa del viaje:</ion-label></ion-list-header>
 </div>
+<div id="map"></div>
 
 <ion-button *ngIf="!this.userData.travelActive && this.userData.userInfo?.uid != this.travel.driver.uid" (click)="regUserInTravel()" class="center-content">Tomar viaje</ion-button>

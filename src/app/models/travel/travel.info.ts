@@ -12,11 +12,13 @@ export interface TravelInfo {
     availableSeats: number;
     payType: string;
     price: number;
+    originLatLng: {};
+    destinationLatLng: {};
 }
 
 export class Travel {
 
-    static createTravelInfo(userInfo: UserInfo, destination: string, payType: string, price: number): TravelInfo {
+    static createTravelInfo(userInfo: UserInfo, destination: string, payType: string, price: number, destinationLatLng: {}): TravelInfo {
         return {
             idDoc: '',
             origin: 'Duoc UC: Sede Viña Del Mar', 
@@ -27,6 +29,11 @@ export class Travel {
             availableSeats: userInfo.vehiculo?.asientos!-1,
             payType: payType,
             price: price,
+            originLatLng: {
+                lat: -33.03362239261196,
+                lng: -71.53317651646127,
+            },
+            destinationLatLng: destinationLatLng,
         }
     }
 }
