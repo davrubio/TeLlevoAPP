@@ -5,8 +5,8 @@ import { IonicModule } from '@ionic/angular';
 import { Travel, TravelInfo } from 'src/app/models/travel/travel.info';
 import { TravelService } from '../../../services/travel/travel.service';
 import { UserLocalData } from 'src/app/models/user/user.info';
-import { ManageLocalData } from 'src/app/utils/manage.localdata';
 import { Car } from 'src/app/models/driver/cardriver.info';
+import { UtilsService } from 'src/app/services/utils/utils.service';
 
 
 declare let google: any;
@@ -21,17 +21,14 @@ declare let google: any;
 })
 export class MapPage implements OnInit {
   
-  readonly payTypes: string[] = ['Efectivo','Transeferencia'];
-  /* readonly control = new FormControl(); */
-  /* readonly maskito = maskitoNumberOptionsGenerator({precision: 0}); */
-
+  readonly payTypes: string[] = ['Efectivo','Transferencia'];
 
   userData: UserLocalData | undefined;
   travel: TravelInfo | undefined;
   car: Car | undefined;
   paytypeTmp: string;
   priceTmp: number;
-
+  destinationLatLng: {};
 
   origin = {lat: -33.03362239261196, lng: -71.53317651646127}
   map: any;
@@ -40,11 +37,11 @@ export class MapPage implements OnInit {
   directionsService = new google.maps.DirectionsService();
   directionsRenderer = new google.maps.DirectionsRenderer();
 
-  constructor(private TravelService: TravelService) {
-    this.userData = ManageLocalData.getLocalData();
-   }
+  constructor(private TravelService: TravelService, private manageLocalData : UtilsService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    let localData: any = await this.manageLocalData.getFromLocalStorage('userdata');
+    this.userData = JSON.parse(localData);
     this.loadMap();
     this.onSearchChange(this.map, this.marker);
   }
@@ -53,22 +50,25 @@ export class MapPage implements OnInit {
     
     this.map = new google.maps.Map(map, {
       center: this.origin,
-      zoom: 17
+      zoom: 17,
+      streetViewControl: false,
+      mapTypeControl: false,
     });
 
     this.marker = new google.maps.Marker({
       position: this.origin,
-      map: this.map
+      map: this.map,
     });
 
     this.directionsRenderer.setMap(this.map);
-    /* let indicactions: HTMLElement = document.getElementById('indicactions'); */
-    this.directionsRenderer.setPanel();
   }
 
   onSearchChange(localMap: any, localMarker: any){
     let autocomplete: HTMLElement = document.getElementById('autocomplete')!;
-    const search = new google.maps.places.Autocomplete(autocomplete);
+    const options = {
+      componentRestrictions: { country: "cl" },
+    }
+    const search = new google.maps.places.Autocomplete(autocomplete, options);
     this.search = search;
 
     search.addListener('place_changed', () => {
@@ -87,7 +87,7 @@ export class MapPage implements OnInit {
     let request = {
       origin: this.origin,
       destination: place,
-      travelMode: google.maps.TravelMode.DRIVING
+      travelMode: google.maps.TravelMode.DRIVING,
     };
 
     this.marker.setPosition(null);
@@ -95,8 +95,12 @@ export class MapPage implements OnInit {
     console.log(this.search.getPlace().formatted_address);  // direccion
     console.log(this.search.getPlace().geometry.location.lat()); // latitud
     console.log(this.search.getPlace().geometry.location.lng()); // longitud
+    this.destinationLatLng =  {
+      lat: this.search.getPlace().geometry.location.lat(),
+      lng: this.search.getPlace().geometry.location.lng(), 
+    };
 
-    this.travel = Travel.createTravelInfo(this.userData?.userInfo!, this.search.getPlace().formatted_address, this.paytypeTmp, this.priceTmp);
+    this.travel = Travel.createTravelInfo(this.userData?.userInfo!, this.search.getPlace().formatted_address, this.paytypeTmp, this.priceTmp, this.destinationLatLng);
     this.TravelService.saveTravel(this.travel)
 
 
@@ -110,8 +114,5 @@ export class MapPage implements OnInit {
     this.paytypeTmp = event.target.value
     console.log(this.paytypeTmp);
   }
-
-  
-
 }
 

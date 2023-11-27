@@ -13,17 +13,18 @@ import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http"
 
 const appConfig: ApplicationConfig = {
     providers: [
-        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-        importProvidersFrom(IonicModule.forRoot({})),
-        provideRouter(routes),
-        importProvidersFrom(provideFirebaseApp(() => initializeApp(environment.firebase))),
-        importProvidersFrom(provideAuth(() => getAuth())),
-        importProvidersFrom(provideFirestore(() => getFirestore())),
-        importProvidersFrom(provideStorage(() => getStorage())),
-        importProvidersFrom(provideDatabase(() => getDatabase())),
-        provideAnimations(),
-        provideHttpClient(withInterceptorsFromDi()),
-    ]
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    importProvidersFrom(IonicModule.forRoot({})),
+    provideRouter(routes),
+    importProvidersFrom(provideFirebaseApp(() => initializeApp(environment.firebase))),
+    importProvidersFrom(provideAuth(() => getAuth())),
+    importProvidersFrom(provideFirestore(() => getFirestore())),
+    importProvidersFrom(provideStorage(() => getStorage())),
+    importProvidersFrom(provideDatabase(() => getDatabase())),
+    provideAnimations(),
+    provideHttpClient(withInterceptorsFromDi()),
+    provideAnimations()
+]
 }
 
 export { appConfig }

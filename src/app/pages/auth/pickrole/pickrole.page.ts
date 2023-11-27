@@ -5,7 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { Router, RouterLink } from '@angular/router';
 import { UserLocalData } from 'src/app/models/user/user.info';
 import { HeaderComponent } from "../../../components/base/header/header.component";
-import { ManageLocalData } from 'src/app/utils/manage.localdata';
+import { UtilsService } from 'src/app/services/utils/utils.service';
 
 @Component({
     selector: 'app-pickrole',
@@ -22,6 +22,7 @@ export class PickrolePage implements OnInit {
 
   constructor(
     private router: Router,
+    private manageLocalData : UtilsService
   ) { }
 
   ngOnInit() {
@@ -31,11 +32,10 @@ export class PickrolePage implements OnInit {
   redirectToPage(role:string){
     if(this.userData){
       this.userData.rolActivo = role;
-      ManageLocalData.saveExistsLocalData(this.userData);
+      this.manageLocalData.saveLocalStorage('userdata', this.userData);
     }
 
     let url = '/dash/'+role;
     this.router.navigate([url], {state:{user:this.userData}});
   }
-
 }

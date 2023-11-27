@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DocumentData, DocumentSnapshot, Firestore, collection, collectionData, doc, getDoc, setDoc } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
 import { UserInfo, UserLocalData } from 'src/app/models/user/user.info';
+import { UtilsService } from '../utils/utils.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +11,9 @@ export class UserService {
   readonly NAME_COLLECTION = 'usuarios';
   readonly USER_COLLECTION = collection(this.fireDatabase,this.NAME_COLLECTION);
 
-  userData: UserLocalData;
-
   constructor(
     private fireDatabase: Firestore,
   ) { 
-    this.userData = JSON.parse(localStorage.getItem('userdata') || '{}');
   }
 
   getAllUsers(){    

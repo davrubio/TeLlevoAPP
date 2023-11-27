@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { UserLocalData } from 'src/app/models/user/user.info';
 import { TravelService } from 'src/app/services/travel/travel.service';
 import { TravelInfo } from 'src/app/models/travel/travel.info';
+import { HeaderComponent } from '../../base/header/header.component';
 
 @Component({
   selector: 'app-user-dash',
@@ -19,7 +20,7 @@ export class UserComponent  implements OnInit {
 
   userData: UserLocalData | undefined;
 
-  constructor(private router: Router, private travelService: TravelService) {
+  constructor(private router: Router, private travelService: TravelService,) {
     travelService.getAllActiveTravels().then(result => {
       result.forEach(data => {
         this.travelsActive.push(data.data() as TravelInfo);
