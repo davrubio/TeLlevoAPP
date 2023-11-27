@@ -37,5 +37,4 @@ export class PickrolePage implements OnInit {
     let url = '/dash/'+role;
     this.router.navigate([url], {state:{user:this.userData}});
   }
-
 }

@@ -30,7 +30,8 @@ export class UserComponent implements OnInit {
   directionsRenderer = new google.maps.DirectionsRenderer();
 
 
-  constructor(private router: Router, private travelService: TravelService) { }
+  constructor(private router: Router, private travelService: TravelService) {
+  }
 
   ngOnInit() {
     this.loadMap();
