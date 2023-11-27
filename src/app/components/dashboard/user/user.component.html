@@ -1,7 +1,9 @@
-<div class="ion-padding">
-  <div class="travels">
+<ion-content class="user ion-padding">
+  <div class="ion-padding">
     <h1>Bienvenido {{userData?.userInfo?.nombre}}</h1>
-    <ion-list class="travels" color="light">
+  </div>
+  <ion-card >
+    <ion-list class="ion-padding-bottom">
       <ion-list-header class="header">
         <ion-label class="title">Viajes disponibles</ion-label>
       </ion-list-header>
@@ -9,5 +11,5 @@
         <ion-button fill="clear" (click)="viewTravel(travel)">{{ travel.destination }}</ion-button>
       </ion-item>
     </ion-list>
-  </div>
-</div>
+  </ion-card>
+</ion-content>
