@@ -21,9 +21,7 @@ declare let google: any;
 })
 export class MapPage implements OnInit {
   
-  readonly payTypes: string[] = ['Efectivo','Transeferencia'];
-  /* readonly control = new FormControl(); */
-  /* readonly maskito = maskitoNumberOptionsGenerator({precision: 0}); */
+  readonly payTypes: string[] = ['Efectivo','Transferencia'];
 
 
   userData: UserLocalData | undefined;
@@ -31,6 +29,7 @@ export class MapPage implements OnInit {
   car: Car | undefined;
   paytypeTmp: string;
   priceTmp: number;
+  destinationLatLng: {};
 
 
   origin = {lat: -33.03362239261196, lng: -71.53317651646127}
@@ -53,22 +52,25 @@ export class MapPage implements OnInit {
     
     this.map = new google.maps.Map(map, {
       center: this.origin,
-      zoom: 17
+      zoom: 17,
+      streetViewControl: false,
+      mapTypeControl: false,
     });
 
     this.marker = new google.maps.Marker({
       position: this.origin,
-      map: this.map
+      map: this.map,
     });
 
     this.directionsRenderer.setMap(this.map);
-    /* let indicactions: HTMLElement = document.getElementById('indicactions'); */
-    this.directionsRenderer.setPanel();
   }
 
   onSearchChange(localMap: any, localMarker: any){
     let autocomplete: HTMLElement = document.getElementById('autocomplete')!;
-    const search = new google.maps.places.Autocomplete(autocomplete);
+    const options = {
+      componentRestrictions: { country: "cl" },
+    }
+    const search = new google.maps.places.Autocomplete(autocomplete, options);
     this.search = search;
 
     search.addListener('place_changed', () => {
@@ -87,7 +89,7 @@ export class MapPage implements OnInit {
     let request = {
       origin: this.origin,
       destination: place,
-      travelMode: google.maps.TravelMode.DRIVING
+      travelMode: google.maps.TravelMode.DRIVING,
     };
 
     this.marker.setPosition(null);
@@ -95,8 +97,12 @@ export class MapPage implements OnInit {
     console.log(this.search.getPlace().formatted_address);  // direccion
     console.log(this.search.getPlace().geometry.location.lat()); // latitud
     console.log(this.search.getPlace().geometry.location.lng()); // longitud
+    this.destinationLatLng =  {
+      lat: this.search.getPlace().geometry.location.lat(),
+      lng: this.search.getPlace().geometry.location.lng(), 
+    };
 
-    this.travel = Travel.createTravelInfo(this.userData?.userInfo!, this.search.getPlace().formatted_address, this.paytypeTmp, this.priceTmp);
+    this.travel = Travel.createTravelInfo(this.userData?.userInfo!, this.search.getPlace().formatted_address, this.paytypeTmp, this.priceTmp, this.destinationLatLng);
     this.TravelService.saveTravel(this.travel)
 
 
@@ -110,8 +116,5 @@ export class MapPage implements OnInit {
     this.paytypeTmp = event.target.value
     console.log(this.paytypeTmp);
   }
-
-  
-
 }
 

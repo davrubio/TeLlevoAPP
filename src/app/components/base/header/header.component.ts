@@ -1,24 +1,32 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
+import { NavigationEnd, Router } from '@angular/router';
+import { IonicModule, MenuController, NavController } from '@ionic/angular';
 import { UserLocalData } from 'src/app/models/user/user.info';
 import { APICarService } from 'src/app/services/API/apicar.service';
 import { AuthService } from 'src/app/services/authentication/auth.service';
 import { ManageLocalData } from 'src/app/utils/manage.localdata';
 import { ManageSession } from 'src/app/utils/manage.session';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule]
+  imports: [IonicModule, CommonModule, FormsModule, MatSidenavModule, MatToolbarModule, MatIconModule, MatButtonModule]
 })
 export class HeaderComponent extends ManageSession implements OnInit {
 
   @Input({required:true})
   titlePage!: string;
+  darkMode = false;
+  dialog: boolean = false;
+  showFiller = false;
 
   userData: UserLocalData;
 
@@ -26,13 +34,43 @@ export class HeaderComponent extends ManageSession implements OnInit {
     authService: AuthService,
     private carService: APICarService,
     private router: Router, 
+    private navCtrl: NavController,
+    private menuCrtl: MenuController,
+    private location: Location,
   ) {
     super(authService);
     this.userData = ManageLocalData.getLocalData();
   }
+  
+  ngOnInit() {
+    this.checkAppMode();
+  }
 
-  ngOnInit() { }
+  goBack(){
+    this.navCtrl.back();
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {   
+        this.menuCrtl.close();
+      }
+    });
+  }
 
+  checkAppMode(){
+    const checkIsDarkMode = localStorage.getItem('darkModeActivated');
+    checkIsDarkMode == 'true' ? (this.darkMode = true) : (this.darkMode = false);
+    document.body.classList.toggle('dark', this.darkMode);
+  }
+
+  toggleChange() {
+    this.darkMode = !this.darkMode;
+    document.body.classList.toggle('dark', this.darkMode);
+    if(this.darkMode){
+      localStorage.setItem('darkModeActivated', 'true');
+    } else {
+      localStorage.setItem('darkModeActivated', 'false');
+    }
+  }
+  
   redirecToProfile(){
     this.router.navigate(['/profile'], {state: {user: this.userData}});
   }
