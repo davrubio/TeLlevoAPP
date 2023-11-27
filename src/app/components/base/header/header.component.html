@@ -23,7 +23,7 @@
         <ion-icon slot="start" name="person"></ion-icon>
         Perfil
       </ion-button>
-      <div *ngIf="!userData.userInfo?.roles?.includes('driver')">
+      <div *ngIf="!userData?.userInfo?.roles?.includes('driver')">
         <ion-button (click)="redirecToDriverForm()" size="medium" expand="block" fill="clear">
           <ion-icon slot="start" name="car"></ion-icon>
           Quiero ser conductor

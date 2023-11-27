@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonInput, IonicModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { HeaderComponent } from "../../../components/base/header/header.component";
 import { Router } from '@angular/router';
 import { APICarService } from 'src/app/services/API/apicar.service';
@@ -14,9 +14,9 @@ import { MaskitoModule } from '@maskito/angular';
 import { MaskitoElementPredicateAsync, MaskitoOptions } from '@maskito/core';
 import { Car } from 'src/app/models/driver/cardriver.info';
 import { DriverRequest, FormDriverMaker } from 'src/app/models/driver/form.info';
-import { ManageLocalData } from 'src/app/utils/manage.localdata';
 import { FormService } from 'src/app/services/form/form.service';
 import { UserLocalData } from 'src/app/models/user/user.info';
+import { UtilsService } from 'src/app/services/utils/utils.service';
 
 @Component({
     selector: 'app-driver',
@@ -67,11 +67,17 @@ export class DriverPage implements OnInit {
     private apiService: APICarService,
     private formBuilder: FormBuilder,
     private formService: FormService,
+    private manageLocalData : UtilsService,
   ) { 
-    this.userData = ManageLocalData.getLocalData();
+    
+  }
+
+  async ngOnInit() {
+    let localData: any = await this.manageLocalData.getFromLocalStorage('userdata');
+    this.userData = JSON.parse(localData);
     this.requestForm = FormDriverMaker.basicInformation(this.userData.email, this.userData.userInfo?.nombre || '', this.userData.userInfo?.carreraUniv || '');
 
-    apiService.getManufacturersData().subscribe( result => this.listManufacturers = result.data );
+    this.apiService.getManufacturersData().subscribe( result => this.listManufacturers = result.data );
 
     this.filteredManufacturersOptions = this.controlManufacturer.valueChanges.pipe(
       startWith(''),
@@ -100,9 +106,6 @@ export class DriverPage implements OnInit {
         return value ? this._filter(value, 4) : this.listColors.slice();
       })
     );
-  }
-
-  ngOnInit() {
   }
 
   displayFn(nameManufacturer: string): string {

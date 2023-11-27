@@ -8,7 +8,7 @@ import { TravelInfo } from 'src/app/models/travel/travel.info';
 import { UserLocalData } from 'src/app/models/user/user.info';
 import { MaskitoModule } from '@maskito/angular';
 import { TravelService } from '../../../services/travel/travel.service';
-import { ManageLocalData } from 'src/app/utils/manage.localdata';
+import { UtilsService } from 'src/app/services/utils/utils.service';
 
 @Component({
   selector: 'app-user-travel',
@@ -24,7 +24,7 @@ export class UserComponent  implements OnInit {
   travel: TravelInfo;
   userData: UserLocalData;
 
-  constructor(private router: Router, private travelService: TravelService) { }
+  constructor(private router: Router, private travelService: TravelService, private manageLocalData : UtilsService) { }
 
   ngOnInit() { }
 
@@ -36,7 +36,7 @@ export class UserComponent  implements OnInit {
     this.travel.passengers.push(this.userData.userInfo!);
     this.travelService.updateTravel(this.travel);
     this.userData.travelActive = true;
-    ManageLocalData.saveExistsLocalData(this.userData);
+    this.manageLocalData.saveLocalStorage('userdata',this.userData);
     this.router.navigate(['/dash/'+this.userData.rolActivo],{state:{user:this.userData}});
   }
 

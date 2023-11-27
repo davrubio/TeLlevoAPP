@@ -6,7 +6,7 @@ import { Router, RouterLink} from '@angular/router';
 import { AuthService } from 'src/app/services/authentication/auth.service';
 import { UserLocalData } from 'src/app/models/user/user.info';
 import { ManageSession } from 'src/app/utils/manage.session';
-import { ManageLocalData } from 'src/app/utils/manage.localdata';
+import { UtilsService } from 'src/app/services/utils/utils.service';
 
 
 @Component({
@@ -16,18 +16,20 @@ import { ManageLocalData } from 'src/app/utils/manage.localdata';
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, RouterLink]
 })
-export class SigninPage extends ManageSession implements OnInit {
+export class SigninPage implements OnInit {
 
   errorLogin: boolean = false;
+  btnLogin: boolean = false;
 
   constructor(
     private router: Router,
-    authService: AuthService,
-  ) {
-    super(authService);
-  }
+    private authService: AuthService,
+    private manageLocalData : UtilsService,
+  ) { }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    this.authService.isAuth().then(valdiation => this.btnLogin = valdiation);
+  }
 
   isOpen() {
     return this.errorLogin;
@@ -38,27 +40,31 @@ export class SigninPage extends ManageSession implements OnInit {
   }
 
   loginWithGoogle() {
-    this.authService.GoogleAuthProv()
-    .then(result => {
-      if(result){
-        this.errorLogin = result;
-      } else {
-        this.errorLogin = result;
-      }
+    this.authService.GoogleAuthProv().then(errorResult => {
+      this.errorLogin = errorResult;
+      if(!errorResult)
+        this.btnLogin = true;
     }).catch(error => {
       console.log(error);
     });
   }
 
   isBtnLogin(): boolean {
-    return this.authService.isAuth();
+    return this.btnLogin;
   }
 
-  redireccionar(){
-    var userData: UserLocalData = ManageLocalData.getLocalData();
+  async redireccionar(){
+    let localData: any = await this.manageLocalData.getFromLocalStorage('userdata');
+    let userData: UserLocalData = JSON.parse(localData);
+
     if (userData.userInfo?.roles.length == 1) { //Redireccionar solo por rol que tiene
-      this.router.navigate(['/dash/'+userData.rolActivo], {state: {user: userData}});
-    } else //Mandar a vista para seleccionar tipo de vista role a ocupar en la app
-      this.router.navigate(['/pickrole'], {state: {user: userData}});
+        this.router.navigate(['/dash/'+userData.rolActivo], {state: {user: userData}});
+      } else //Mandar a vista para seleccionar tipo de vista role a ocupar en la app
+        this.router.navigate(['/pickrole'], {state: {user: userData}});
+  }
+
+  cerrarSesion(){
+    this.authService.signOut();
+    this.btnLogin = false
   }
 }

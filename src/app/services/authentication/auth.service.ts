@@ -3,45 +3,33 @@ import { Auth, GoogleAuthProvider, getAuth, signInWithPopup } from '@angular/fir
 import { UserService } from '../user/user.service';
 import { UserInfo, UserLocalData, UserMaker } from 'src/app/models/user/user.info';
 import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
-import { ManageLocalData } from 'src/app/utils/manage.localdata';
+import { UtilsService } from '../utils/utils.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService{
   
-  // authLocal = getAuth();
+  userData!: UserLocalData;
 
   constructor(
     private fireAuth: Auth,
     private userService: UserService,
     private router: Router,
-  ) { 
-    // if(localStorage.getItem('userdata') != null) {
-    //   this.userData = JSON.parse(localStorage.getItem('userdata') || '{}');
-    // } else {
-    //   this.userData = UserMaker.createBasicLocalData();
-    //   localStorage.setItem('userdata', JSON.stringify(this.userData));
-    // }
-  }
+    private manageLocalData : UtilsService,
+  ) { }
 
   GoogleAuthProv(){
-
     return this.AuthLogin(new GoogleAuthProvider().setCustomParameters({'hd':'duocuc.cl'}));
   }
 
   AuthLogin(provider: any){
     return signInWithPopup(this.fireAuth, provider)
       .then((result) =>{
-        // const credential = GoogleAuthProvider.credentialFromResult(result);
         const userDataLogin = this.checkUser( result.user);
         return false;
       }).catch((error) => {
         const errorCode = error.code;
-        // const errorMessage = error.message;
-
-        // const email = error.customData.email;
-        // const credential = GoogleAuthProvider.credentialFromError(error);
         console.log('Error al iniciar sesion: '+errorCode)
         return true;
       });
@@ -58,21 +46,32 @@ export class AuthService{
       this.userService.saveUser(userDataLogin.email, userInfo);
     }
     
-    this.redireccionar(ManageLocalData.saveLoginLocalData(userDataLogin.email, userInfo));
+    const userData: UserLocalData = {
+      email: userDataLogin.email,
+      sesionActiva: true,
+      rolActivo: '',
+      travelActive: false,
+      userInfo: userInfo,
+    };
+    this.manageLocalData.saveLocalStorage('userdata', userData);
+
+    this.redireccionar(userData);
   }
 
-  isAuth(): boolean {
-    const localData = ManageLocalData.getLocalData();
-    return getAuth().currentUser != null && Object.keys(localData).length > 0;
+  async isAuth(): Promise<boolean> {
+    let localData: any = await this.manageLocalData.getFromLocalStorage('userdata'); 
+    const userData = JSON.parse(localData);
+    return new Promise(resolve => resolve(getAuth().currentUser != null && Object.keys(userData).length > 0));
   }
 
-  signOut() {
-    var userData: UserLocalData = ManageLocalData.getLocalData();
+  async signOut() {
+    let localData: any = await this.manageLocalData.getFromLocalStorage('userdata');
+    let userData: UserLocalData = JSON.parse(localData);
     
     userData.rolActivo = '';
     userData.sesionActiva = false;
 
-    ManageLocalData.saveExistsLocalData(userData);
+    this.manageLocalData.saveLocalStorage('userdata',userData);
 
     this.fireAuth.signOut();
     this.router.navigate(['/login']);
@@ -80,11 +79,9 @@ export class AuthService{
 
   validUIDToken(email: string, uidLogin: string, userInfo: UserInfo): UserInfo{
       if(uidLogin != userInfo.uid){
-        //Primero Actualizamos informacion del usuario
         userInfo.lastUid = userInfo.uid;
         userInfo.uid = uidLogin;
 
-        //Luego enviamos a actualizar datos de la base datos
         this.userService.saveUser(email, userInfo);
       }
     return userInfo;
@@ -94,39 +91,36 @@ export class AuthService{
     if (userLoginData.userInfo?.roles.length == 1) { //Redireccionar solo por rol que tiene
       userLoginData.rolActivo = userLoginData.userInfo?.roles[0];
       this.router.navigate(['/dash/'+userLoginData.userInfo?.roles[0]], {state: {user: userLoginData}});
-      ManageLocalData.saveExistsLocalData(userLoginData);
-      
+      this.manageLocalData.saveLocalStorage('userdata', userLoginData);
     } else //Mandar a vista para seleccionar tipo de vista role a ocupar en la app
       this.router.navigate(['/pickrole'], {state: {user: userLoginData}});
   }
 
-  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean{
-    // console.log('Parametros')
-    // console.log(next)
-    // console.log(state)
+  async canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     const roles = ['admin','driver','user'];
-    const userData = ManageLocalData.getLocalData();
+    let localData: any = await this.manageLocalData.getFromLocalStorage('userdata');
+    const userData: UserLocalData = JSON.parse(localData);
     if(userData.sesionActiva) {
       if(state.url.includes(roles[0]) || state.url.includes(roles[1]) || state.url.includes(roles[2])) {
         if(state.url.includes(userData.rolActivo)){
-          return true;
+          return new Promise(resolve => resolve(true));
         }  else {
           if(userData.userInfo?.roles.length! > 1) 
             this.router.navigate(['/pickrole']);
           else 
             this.router.navigate([`/dash/${userData.rolActivo}`]);
 
-          return false;
+          return new Promise(resolve => resolve(false));
         }
       }
         
-      return true;
+      return new Promise(resolve => resolve(true));
     }
     this.router.navigate(['/login']);
-    return false; 
+    return new Promise(resolve => resolve(false));
   }
 }
 
-export const AuthGuard: CanActivateFn = (next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean => {
+export const AuthGuard: CanActivateFn = (next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> => {
   return inject(AuthService).canActivate(next, state);
 }
