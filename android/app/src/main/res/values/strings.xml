@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">TeLlevoAPP</string>
     <string name="title_activity_main">TeLlevoAPP</string>
-    <string name="package_name">io.ionic.starter</string>
-    <string name="custom_url_scheme">io.ionic.starter</string>
+    <string name="package_name">cl.tellevoapp</string>
+    <string name="custom_url_scheme">cl.tellevoapp</string>
+    <string name="server_client_id">1080604287465-lfs4jki8ndrab9691svqklt0emebebja.apps.googleusercontent.com</string>
 </resources>

@@ -4,6 +4,7 @@ import { UserService } from '../user/user.service';
 import { UserInfo, UserLocalData, UserMaker } from 'src/app/models/user/user.info';
 import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
 import { UtilsService } from '../utils/utils.service';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,9 @@ export class AuthService{
     private userService: UserService,
     private router: Router,
     private manageLocalData : UtilsService,
-  ) { }
+  ) {
+    GoogleAuth.initialize();
+  }
 
   GoogleAuthProv(){
     return this.AuthLogin(new GoogleAuthProvider().setCustomParameters({'hd':'duocuc.cl'}));
