@@ -29,7 +29,16 @@ export class UserMaker {
             lastUid: userData.uid,
             emailVerificado: userData.emailVerified,
             roles: ['user'],
-            vehiculo: undefined,
+            vehiculo: {
+                patente: '',
+                modelo: '',
+                marca: '',
+                annoVehiculo: 0,
+                permisoCirculacion: false,
+                dueno: '',
+                asientos: 0,
+                color: ''
+            },
             carreraUniv: '',
         }
     }
@@ -41,7 +50,16 @@ export class UserMaker {
             lastUid: '',
             emailVerificado: false,
             roles: ['user'],
-            vehiculo: undefined,
+            vehiculo: {
+                patente: '',
+                modelo: '',
+                marca: '',
+                annoVehiculo: 0,
+                permisoCirculacion: false,
+                dueno: '',
+                asientos: 0,
+                color: ''
+            },
             carreraUniv: '',
         }
     }
