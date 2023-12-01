@@ -1,16 +1,19 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, NgZone, inject } from '@angular/core';
 import { Auth, GoogleAuthProvider, getAuth, signInWithPopup } from '@angular/fire/auth';
 import { UserService } from '../user/user.service';
 import { UserInfo, UserLocalData, UserMaker } from 'src/app/models/user/user.info';
 import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
 import { UtilsService } from '../utils/utils.service';
-import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
+import { FirebaseAuthentication, SignInResult, User } from '@capacitor-firebase/authentication';
+import { Observable, ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService{
-  
+
+  private currentUserSubject = new ReplaySubject<User | null>(1);
+
   userData!: UserLocalData;
 
   constructor(
@@ -18,8 +21,23 @@ export class AuthService{
     private userService: UserService,
     private router: Router,
     private manageLocalData : UtilsService,
-  ) {
-    GoogleAuth.initialize();
+    private readonly ngZone: NgZone,
+  ) { 
+    FirebaseAuthentication.removeAllListeners().then(() => {
+      FirebaseAuthentication.addListener('authStateChange', (change) => {
+        this.ngZone.run(() => {
+          this.currentUserSubject.next(change.user);
+        });
+      });
+    });
+    // Only needed to support dev livereload.
+    FirebaseAuthentication.getCurrentUser().then((result) => {
+      this.currentUserSubject.next(result.user);
+    });
+  }
+
+  public get currentUser$(): Observable<User | null> {
+    return this.currentUserSubject.asObservable();
   }
 
   GoogleAuthProv(){
@@ -36,11 +54,22 @@ export class AuthService{
         console.log('Error al iniciar sesion: '+errorCode)
         return true;
       });
-  }
+    }
 
+  async signInWithGoogle(): Promise<boolean> {
+    return FirebaseAuthentication.signInWithGoogle().then(result => {
+      const userDataLogin = this.checkUser( result.user);
+      return false;
+    }).catch( error => {
+      const errorCode = error.code;
+      console.log('Error al iniciar sesion: '+errorCode)
+      return true;
+    });
+  }
+    
   async checkUser(userDataLogin: any){
-    var docSnap = await this.userService.getUser(userDataLogin.email);
-    var userInfo: UserInfo;
+    let docSnap = await this.userService.getUser(userDataLogin.email);
+    let userInfo: UserInfo;
 
     if(docSnap.exists()) {
       userInfo = this.validUIDToken(userDataLogin.email, userDataLogin.uid, docSnap.data() as UserInfo);
@@ -76,7 +105,7 @@ export class AuthService{
 
     this.manageLocalData.saveLocalStorage('userdata',userData);
 
-    this.fireAuth.signOut();
+    await FirebaseAuthentication.signOut();
     this.router.navigate(['/login']);
   }
 
@@ -98,7 +127,7 @@ export class AuthService{
     } else //Mandar a vista para seleccionar tipo de vista role a ocupar en la app
       this.router.navigate(['/pickrole'], {state: {user: userLoginData}});
   }
-
+  
   async canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     const roles = ['admin','driver','user'];
     let localData: any = await this.manageLocalData.getFromLocalStorage('userdata');

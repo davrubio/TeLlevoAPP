@@ -48,7 +48,9 @@
     <ion-list-header><h2>Mapa del viaje:</h2></ion-list-header>
     <div id="map"></div>
   </ion-list>
+  <ion-list>
+    <ion-button *ngIf="!this.userData.travelActive && this.userData.userInfo?.uid != this.travel.driver.uid" (click)="regUserInTravel()" class="button">Tomar viaje</ion-button>
+  </ion-list>
 </ion-card>
 
 
-<ion-button *ngIf="!this.userData.travelActive && this.userData.userInfo?.uid != this.travel.driver.uid" (click)="regUserInTravel()" class="center-content">Tomar viaje</ion-button>

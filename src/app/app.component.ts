@@ -1,6 +1,8 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { Component } from '@angular/core';
+import { IonicModule, Platform } from '@ionic/angular';
 import { HeaderComponent } from './components/base/header/header.component';
+import { initializeApp } from '@angular/fire/app';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -10,5 +12,8 @@ import { HeaderComponent } from './components/base/header/header.component';
   imports: [IonicModule, HeaderComponent]
 })
 export class AppComponent {
-  constructor() {}
+  
+  constructor(private platform: Platform) {
+  }
+  
 }
