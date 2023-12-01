@@ -5,15 +5,16 @@ ion-toolbar {
 ion-button {
     --background: black;
     color: white;
+    display: flex;
+    justify-content: center;
+    margin: 5%;
 }
 
 #map {
     display: block;
     width: 310px;
     height: 300px;
-}
-
-ion-button {
-    --background: black;
-    color: white;
+    border-radius: 2%;
+    justify-content: center;
+    align-items: center;
 }

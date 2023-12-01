@@ -6,6 +6,7 @@ import { Router, RouterLink} from '@angular/router';
 import { AuthService } from 'src/app/services/authentication/auth.service';
 import { UserLocalData } from 'src/app/models/user/user.info';
 import { UtilsService } from 'src/app/services/utils/utils.service';
+import { SignInResult } from '@capacitor-firebase/authentication';
 
 
 @Component({
@@ -16,6 +17,8 @@ import { UtilsService } from 'src/app/services/utils/utils.service';
   imports: [IonicModule, CommonModule, FormsModule, RouterLink]
 })
 export class SigninPage implements OnInit {
+
+  resultLoginTest!: SignInResult;
 
   errorLogin: boolean = false;
   btnLogin: boolean = false;
@@ -39,13 +42,21 @@ export class SigninPage implements OnInit {
   }
 
   loginWithGoogle() {
-    this.authService.GoogleAuthProv().then(errorResult => {
+    // this.authService.GoogleAuthProv().then(errorResult => {
+    //   this.errorLogin = errorResult;
+    //   if(!errorResult)
+    //     this.btnLogin = true;
+    // }).catch(error => {
+    //   console.log(error);
+    // });
+    this.authService.signInWithGoogle().then(errorResult => {
       this.errorLogin = errorResult;
       if(!errorResult)
         this.btnLogin = true;
     }).catch(error => {
       console.log(error);
     });
+  
   }
 
   isBtnLogin(): boolean {
@@ -66,4 +77,5 @@ export class SigninPage implements OnInit {
     this.authService.signOut();
     this.btnLogin = false
   }
+
 }
