@@ -1,9 +1,0 @@
-<app-header titlePage="{{titlePage}}"></app-header>
-
-<ion-content [fullscreen]="true" class="ion-padding">
-  <div class="buttons ion-padding">
-    <div class="center-content" *ngFor="let rol of userData?.userInfo?.roles">
-      <ion-button (click)="redirectToPage(rol)" fill="solid" expand="block" >{{rol | titlecase}}</ion-button>
-    </div>
-  </div>
-</ion-content>
